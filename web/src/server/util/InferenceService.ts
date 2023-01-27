@@ -1,9 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import axios from "axios";
-import { zip } from "lodash";
 import { z } from "zod";
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  log: ["query", "info", "warn", "error"],
+});
 
 export class InferenceService {
   private instance = axios.create({
@@ -43,15 +44,11 @@ export class InferenceService {
       })
       .parse(rawResponse);
 
-    zip(uncachedUrls, result).forEach(async ([url, alt]) => {
-      if (url && alt) {
-        await prisma.inference.create({
-          data: {
-            url,
-            result: alt,
-          },
-        });
-      }
+    await prisma.inference.createMany({
+      data: uncachedUrls.map((url, i) => ({
+        url,
+        result: result[i] || "",
+      })),
     });
 
     return urls.map((url) => {
