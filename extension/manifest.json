@@ -7,6 +7,9 @@
     "default_popup": "index.html",
     "default_icon": "hello_extensions.png"
   },
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_scripts": [
     {
       "js": [
@@ -19,5 +22,6 @@
   ],
   "permissions": [
     "activeTab"
-  ]
+  ],
+  "host_permissions": ["https://team-n-web.vercel.app/"]
 }
