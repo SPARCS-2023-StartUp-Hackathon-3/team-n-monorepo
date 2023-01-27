@@ -6,16 +6,56 @@
  * +. DOMSubtreeModified는 권장하지 않으므로 MutationObserver로 바꿀 수 있으면 바꾸기
  */
 
-function fillAlt(imgNode) {
-  imgNode.setAttribute("alt", "결과값");
+
+let urlArr = []; // page의 모든 url Array
+let urlArrFlag = false;
+let recievedArr = []; // API call 후 받은 Array [{url,alt}]
+
+function makeUrlArr(imgNode) {
+  if(!urlArrFlag) {
+    urlArr = [];
+    urlArrFlag = true;
+  } else{
+    urlArr.push(imgNode.src);
+  }
 }
 
-chrome.runtime.sendMessage(
-  { contentScriptQuery: "/image/alt", urls: [""] },
-  (res) => {
-    console.log("content-script: ", res);
+function callAPI(sendingArr, imgNodeArr) {
+  chrome.runtime.sendMessage(
+    { contentScriptQuery: "/image/alt", urls: sendingArr},
+    (res) => {
+      console.log(imgNodeArr);
+      recievedArr = res;
+      for(let i = 0; i < imgNodeArr.length; i++){
+        fillAlt(imgNodeArr[i]);
+      }
+      console.log("content-script: ", recievedArr);
+    },
+  );
+}
+
+
+function fillAlt(imgNode) {
+  let altText = "";
+  //console.log(recievedArr);
+  for(let i = 0, j = recievedArr.length; i < j; i++) {
+    //console.log(recievedArr[i].alt);
+    if(imgNode.src === recievedArr[i].url) {
+      imgNode.setAttribute("alt", recievedArr[i].alt);
+      break;
+    }
   }
-);
+  console.log(imgNode.alt);
+}
+
+
+// Listen for messages from the popup.
+chrome.runtime.onMessage.addListener((msg, sender, response) => {
+  if (msg.from === "popup" && msg.subject === "DOMInfo") {
+    const count = 13; // TODO: alt 변경한 이미지 배열의 길이로 바꾸기
+    response(count);
+  }
+});
 
 // Listen for messages from the popup.
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
@@ -51,12 +91,20 @@ observer.observe(target, config);
 observer.disconnect();
  */
 
+
+// page 처음 진입
 let checkImgs = document.getElementsByTagName("img");
 console.log(checkImgs);
-new Array(...checkImgs).forEach(fillAlt);
+new Array(...checkImgs).forEach(makeUrlArr);
+callAPI(urlArr, checkImgs);
+//new Array(...checkImgs).forEach(fillAlt);
 
-document.addEventListener("DOMSubtreeModified", (e) => {
+// DOMSubtreeModified마다 새로 API call 후 새로 fill
+document.addEventListener("DOMSubtreeModified", (e) => { 
+  urlArrFlag = false;
   if (e.target.tagName === "IMG") {
-    fillAlt(e.target);
+    makeUrlArr(e.target);
+    callAPI(urlArr, e.target);
+    //fillAlt(e.target);
   }
 });
