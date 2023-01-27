@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import NextCors from "nextjs-cors";
 import { z } from "zod";
 import { InferenceService } from "../../../server/util/InferenceService";
+import { TranslationService } from "../../../server/util/TranslationService";
 
 export default async function handler(
   req: NextApiRequest,
@@ -35,10 +36,13 @@ export default async function handler(
 
   const result = await new InferenceService().getFromCacheOrPython(urls);
 
-  const response = result.map((r) => ({
-    url: r.url,
-    alt: r.result,
-  }));
+  const translationService = new TranslationService();
+  const response = await Promise.all(
+    result.map(async (r) => ({
+      url: r.url,
+      alt: await translationService.enToKr(r.result),
+    }))
+  );
 
   res.status(200).json({ data: response });
 }
