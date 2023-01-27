@@ -25,6 +25,44 @@ model Inference {
     result    String
 }
 
+model Question {
+    id          Int          @id @default(autoincrement())
+    createdAt   DateTime     @default(now())
+    url         String
+    submissions Submission[]
+    options     Option[]
+}
+
+model Option {
+    id         Int      @id @default(autoincrement())
+    createdAt  DateTime @default(now())
+    text       String
+    questionId Int
+    question   Question @relation(fields: [questionId], references: [id])
+
+    @@index([questionId])
+}
+
+model Submission {
+    id         Int      @id @default(autoincrement())
+    createdAt  DateTime @default(now())
+    questionId Int
+    anonUserId Int
+    answer     Int
+    question   Question @relation(fields: [questionId], references: [id])
+    anonUser   AnonUser @relation(fields: [anonUserId], references: [id])
+
+    @@index([questionId])
+    @@index([anonUserId])
+}
+
+model AnonUser {
+    id          Int          @id @default(autoincrement())
+    createdAt   DateTime     @default(now())
+    nickname    String
+    submissions Submission[]
+}
+
 // Necessary for Next auth
 // model Account {
 //     id                String  @id @default(cuid())
