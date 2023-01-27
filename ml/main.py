@@ -17,6 +17,10 @@ def read_root():
 
 @app.post("/alt")
 def generate_alt_text(item: RequestItem) -> ResponseItem:
+    print(f'received url = {item.urls}')
+    if not item.urls:
+        return {"result": []}
+        
     image_to_text = pipeline("image-to-text", model="nlpconnect/vit-gpt2-image-captioning")
 
     result = list(map(lambda a: a[0]['generated_text'], image_to_text(item.urls)))
