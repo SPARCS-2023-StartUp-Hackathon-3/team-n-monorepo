@@ -17,6 +17,14 @@ chrome.runtime.sendMessage(
   }
 );
 
+// Listen for messages from the popup.
+chrome.runtime.onMessage.addListener((msg, sender, response) => {
+  if (msg.from === "popup" && msg.subject === "DOMInfo") {
+    const count = 13; // TODO: alt 변경한 이미지 배열의 길이로 바꾸기
+    response(count);
+  }
+});
+
 /**
 // 1. 주기적으로 감지할 대상 요소 선정
 const target = document;
