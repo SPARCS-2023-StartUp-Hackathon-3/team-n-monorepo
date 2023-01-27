@@ -1,0 +1,14 @@
+body {
+  width: 470px;
+  height: 350px;
+  padding: 24px;
+
+  background: linear-gradient(180deg, #ECF4FB 0%, rgba(205, 230, 253, 0) 100%);
+}
+
+.description {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  color: #000000;
+}
