@@ -1,9 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { z } from "zod";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const urls = req.body.urls as string[];
+  const body = z
+    .object({
+      urls: z.array(z.string()),
+    })
+    .parse(req.body);
   const response = {
-    data: urls.map((u) => ({
+    data: body.urls.map((u) => ({
       url: u,
       alt: "더미 데이터",
     })),
