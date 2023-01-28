@@ -73,3 +73,7 @@
         url(https://cdn.jsdelivr.net/gh/webfontworld/SCoreDream/SCoreDream9.woff) format('woff');
     font-display: swap;
   }
+
+body {
+  font-family: "SCoreDream";
+}
