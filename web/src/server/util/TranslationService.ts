@@ -7,6 +7,7 @@ export class TranslationService {
   });
 
   async enToKr(en: string): Promise<string> {
+    console.log("enToKr", en);
     const data = await this.instance
       .post<unknown>("/v1/papago/n2mt", `source=en&target=ko&text=${en}`, {
         headers: {
@@ -15,7 +16,16 @@ export class TranslationService {
           "X-Naver-Client-Secret": "emn1T4Bw4Z",
         },
       })
-      .then((res) => res.data);
+      .then((res) => res.data)
+      .catch((e) => {
+        console.error(e);
+        return null;
+      });
+
+    if (!data) {
+      return en;
+    }
+
     const {
       message: {
         result: { translatedText },
