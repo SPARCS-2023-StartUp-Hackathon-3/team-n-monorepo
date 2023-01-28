@@ -28,57 +28,26 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        
-        <div className="area" >
+        <div className="area">
           <ul className="circles">
             <li></li>
             <li></li>
             <li></li>
           </ul>
           <div className="backgroundFig1">
-            <Image
-                  priority
-                  src="/fig1.png"
-                  alt=""
-                  width={247}
-                  height={187}
-            />
+            <Image priority src="/fig1.png" alt="" width={247} height={187} />
           </div>
           <div className="backgroundFig2">
-            <Image
-                  priority
-                  src="/fig2.png"
-                  alt=""
-                  width={197}
-                  height={211}
-            />
+            <Image priority src="/fig2.png" alt="" width={197} height={211} />
           </div>
           <div className="backgroundImg1">
-            <Image
-                  priority
-                  src="/main1.png"
-                  alt=""
-                  width={323}
-                  height={503}
-            />
+            <Image priority src="/main1.png" alt="" width={323} height={503} />
           </div>
           <div className="backgroundImg2">
-            <Image
-                  priority
-                  src="/main2.png"
-                  alt=""
-                  width={312}
-                  height={328}
-            />
+            <Image priority src="/main2.png" alt="" width={312} height={328} />
           </div>
           <div className="backgroundImg3">
-            <Image
-                  priority
-                  src="/main3.png"
-                  alt=""
-                  width={280}
-                  height={298}
-            />
+            <Image priority src="/main3.png" alt="" width={280} height={298} />
           </div>
 
           <div className="middle">
@@ -116,38 +85,43 @@ const Home: NextPage = () => {
             <p className="p1">패션을 들려주는 새로운 눈</p>
           </div>
           <div className="bottom">
-            <form 
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleSubmit();
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSubmit();
+              }}
+            >
+              <input
+                id="nickname"
+                name="nickname"
+                placeholder="닉네임을 입력하세요"
+                value={nickname}
+                onChange={(e) => {
+                  setNickname(e.target.value);
                 }}
-              >
-                <input
-                  id="nickname"
-                  name="nickname"
-                  placeholder="닉네임을 입력하세요"
-                  value={nickname}
-                  onChange={(e) => {
-                    setNickname(e.target.value);
-                  }}
-                />
-              <p className="p2">더 많은 사람들이 선택한 대체텍스트를 찾아 보세요!</p>
+              />
+              <p className="p2">
+                더 많은 사람들이 선택한 대체텍스트를 찾아 보세요!
+              </p>
               <button>시작하기</button>
             </form>
           </div>
-        </div >
-
+        </div>
       </main>
-      <style jsx>{`
+      <style jsx>
+        {`
           body {
             background-color: white;
             color: white;
-            font-family: "SCoreDream";
             font-style: normal;
+          }
+          .area {
+            min-height: 95vh;
+            padding-top: 100px;
           }
           .middle {
             text-align: center;
-            color: #FFFFFF;
+            color: #ffffff;
             mix-blend-mode: difference;
             will-change: opacity;
           }
@@ -170,19 +144,19 @@ const Home: NextPage = () => {
             justify-content: center;
             margin: 10px;
           }
-          .p1{
+          .p1 {
             font-weight: 300;
             font-size: 20px;
             line-height: 24px;
             margin: 40px;
           }
-          .p2{
+          .p2 {
             font-weight: 300;
             font-size: 15px;
             line-height: 18px;
-            margin: 15px;
+            margin: 32px 16px 16px;
           }
-          button{
+          button {
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
@@ -192,7 +166,7 @@ const Home: NextPage = () => {
             line-height: 38px;
 
             background: #000000;
-            color: #FFFFFF;
+            color: #ffffff;
             padding: 25px 140px;
             display: inline-block;
             width: auto;
@@ -217,32 +191,32 @@ const Home: NextPage = () => {
           }
 
           /** background css */
-          .backgroundFig1{
+          .backgroundFig1 {
             position: absolute;
             right: 28px;
             top: 69px;
             mix-blend-mode: difference;
           }
-          .backgroundFig2{
+          .backgroundFig2 {
             position: absolute;
             left: 200px;
             bottom: 69px;
             mix-blend-mode: difference;
           }
-          .backgroundImg1{
+          .backgroundImg1 {
             position: absolute;
-            left: 0px;
-            top: 0px;
+            left: 0;
+            top: 0;
           }
-          .backgroundImg2{
+          .backgroundImg2 {
             position: absolute;
             right: 140px;
             top: 15px;
           }
-          .backgroundImg3{
+          .backgroundImg3 {
             position: absolute;
             left: 222px;
-            bottom: 0px;
+            bottom: 0;
           }
         `}
       </style>
