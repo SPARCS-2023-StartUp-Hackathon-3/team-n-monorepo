@@ -1,6 +1,7 @@
 import axios from "axios";
 import { z } from "zod";
 import { prisma } from "../db";
+import { TranslationService } from "./TranslationService";
 
 export class InferenceService {
   private instance = axios.create({
@@ -43,10 +44,15 @@ export class InferenceService {
       })
       .parse(rawResponse);
 
+    const translationService = new TranslationService();
+    const translatedResult = await Promise.all(
+      result.map(async (r) => await translationService.enToKr(r))
+    );
+
     await prisma.inference.createMany({
       data: uncachedUrls.map((url, i) => ({
         url,
-        result: result[i] || "",
+        result: translatedResult[i] || "",
       })),
     });
 
