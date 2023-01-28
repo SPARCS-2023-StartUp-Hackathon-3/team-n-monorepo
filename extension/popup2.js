@@ -22,7 +22,7 @@ window.addEventListener("load", () => {
         tabs[0].id,
         { from: "popup", subject: "DOMInfo" },
         (count) => {
-          document.getElementById("count2").innerText = String(count);
+          document.getElementById("count2").innerText = String(count ?? 0);
         }
       );
     }

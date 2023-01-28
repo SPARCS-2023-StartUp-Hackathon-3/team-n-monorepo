@@ -27,7 +27,7 @@ const Questions: NextPage = () => {
         <Image
           priority
           src="/logo.png"
-          alt="NOON logo"
+          alt="NooN logo"
           width={327}
           height={93}
         />

@@ -1,6 +1,6 @@
 {
-  "name": "NOON",
-  "description": "NOON chrome extension",
+  "name": "NooN",
+  "description": "NooN chrome extension",
   "version": "1.0",
   "manifest_version": 3,
   "action": {
