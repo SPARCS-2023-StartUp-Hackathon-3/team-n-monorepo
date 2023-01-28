@@ -35,6 +35,24 @@ const Home: NextPage = () => {
             <li></li>
             <li></li>
           </ul>
+          <div className="backgroundFig1">
+            <Image
+                  priority
+                  src="/fig1.png"
+                  alt=""
+                  width={247}
+                  height={187}
+            />
+          </div>
+          <div className="backgroundFig2">
+            <Image
+                  priority
+                  src="/fig2.png"
+                  alt=""
+                  width={197}
+                  height={211}
+            />
+          </div>
           <div className="backgroundImg1">
             <Image
                   priority
@@ -116,7 +134,7 @@ const Home: NextPage = () => {
               <button>시작하기</button>
             </form>
           </div>
-          <div className="right">
+          <div className="toExtension">
             <a href="www.google.com">NooN 확장 프로그램 써 보러 가기</a>
           </div>
         
@@ -126,7 +144,7 @@ const Home: NextPage = () => {
       <style jsx>{`
           body {
             background-color: white;
-            background-image: src("/main1.png")
+            color: white;
             font-family: "SCoreDream";
             font-style: normal;
           }
@@ -134,12 +152,17 @@ const Home: NextPage = () => {
             text-align: center;
             color: #FFFFFF;
             mix-blend-mode: difference;
+            will-change: opacity;
           }
-          .right {
+          .toExtension {
+            font-style: normal;
+            font-weight: 400;
+            font-size: 15px;
             position: absolute;
             bottom: 0;
             right: 0;
             margin: 15px;
+            line-height: 19px;
           }
           .ranking {
             margin-bottom: 50px;
@@ -183,7 +206,6 @@ const Home: NextPage = () => {
 
             background: #FFFFFF;
             color: #000000;
-            margin: 0;
             padding: 25px 140px;
             display: inline-block;
             width: auto;
@@ -194,6 +216,18 @@ const Home: NextPage = () => {
           }
 
           /** background css */
+          .backgroundFig1{
+            position: absolute;
+            right: 28px;
+            top: 69px;
+            mix-blend-mode: difference;
+          }
+          .backgroundFig2{
+            position: absolute;
+            left: 200px;
+            bottom: 69px;
+            mix-blend-mode: difference;
+          }
           .backgroundImg1{
             position: absolute;
             left: 0px;
