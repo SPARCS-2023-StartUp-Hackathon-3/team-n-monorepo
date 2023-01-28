@@ -2,13 +2,20 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 interface Props {
+  triggerNext: string;
   fullWidth: number;
   fullHeight: number;
   items: React.ReactElement[];
   emitCurrentIndex: (index: number) => void;
 }
 
-function Carousel({ fullWidth, fullHeight, items, emitCurrentIndex }: Props) {
+function Carousel({
+  triggerNext,
+  fullWidth,
+  fullHeight,
+  items,
+  emitCurrentIndex,
+}: Props) {
   const arrayLength = useMemo(() => items.length, [items]); // 아이템의 총 수
   const itemWidth = useMemo(() => fullWidth * 0.6, [fullWidth]); // 아이템의 너비
   const distance = useMemo(() => itemWidth / 4, [itemWidth]); // 아이템간의 거리
@@ -78,6 +85,12 @@ function Carousel({ fullWidth, fullHeight, items, emitCurrentIndex }: Props) {
   }, [emitCurrentIndex, currentIndex]);
 
   const visibleRange = 4;
+
+  useEffect(() => {
+    if (triggerNext.length > 0) {
+      setXSpeed(-distance / 12.2);
+    }
+  }, [triggerNext]);
 
   return (
     <>
