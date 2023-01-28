@@ -7,13 +7,21 @@ import { type AnsweredQuestion, QUESTIONS_KEY } from "./questions";
 import useAuth from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 import { api } from "../utils/api";
+import { useRouter } from "next/router";
 
 const Inspect: NextPage = () => {
   const { uuid, nickname } = useAuth();
   const { data: questions } = useSWR<AnsweredQuestion[]>(QUESTIONS_KEY);
 
+  const [inspectedQuestions, setInspectedQuestions] = useState<
+    AnsweredQuestion[]
+  >([]);
   const [currentQuestion, setCurrentQuestion] =
     useState<AnsweredQuestion | null>(null);
+
+  const inspected = inspectedQuestions
+    .map((q) => q.id)
+    .includes(Number(currentQuestion?.id));
 
   const [text, setText] = useState("");
   useEffect(() => {
@@ -30,8 +38,19 @@ const Inspect: NextPage = () => {
         questionId: currentQuestion.id,
         text,
       });
+      setInspectedQuestions((state) => [...state, currentQuestion]);
     }
   };
+
+  // 검수 완료
+  const router = useRouter();
+  useEffect(() => {
+    if (questions && inspectedQuestions) {
+      if (questions.length === inspectedQuestions.length) {
+        void router.push("/score");
+      }
+    }
+  }, [inspectedQuestions, questions]);
 
   return (
     <>
@@ -61,6 +80,13 @@ const Inspect: NextPage = () => {
                     width={500}
                     height={500}
                     key={i}
+                    style={{
+                      opacity: inspectedQuestions
+                        .map((q) => q.id)
+                        .includes(Number(question?.id))
+                        ? 0.1
+                        : 1,
+                    }}
                   />
                 );
               })}
@@ -75,6 +101,11 @@ const Inspect: NextPage = () => {
             value={text}
             onChange={(e) => {
               setText(e.target.value);
+            }}
+            disabled={inspected}
+            style={{
+              opacity: inspected ? 0.5 : 1,
+              pointerEvents: inspected ? "none" : "auto",
             }}
           />
           <button onClick={submit}>이 아이템 옷장에 집어넣기</button>
@@ -123,6 +154,7 @@ const Inspect: NextPage = () => {
           white-space: pre-wrap;
           word-break: break-all;
           overflow: hidden;
+          resize: none;
         }
       `}</style>
     </>
