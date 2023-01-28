@@ -162,7 +162,7 @@ export const questionRouter = createTRPCRouter({
         },
       });
 
-      return result;
+      return createdOptions;
     }),
 
   addOption: publicProcedure
