@@ -52,6 +52,7 @@ const Questions: NextPage = () => {
         questionId: question.id,
         optionId: answer.id,
         userUuid: uuid!,
+        nickname: nickname!,
       });
       if (countOfCorrectAnswer === answer.submitCount) {
         // 정답

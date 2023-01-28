@@ -61,38 +61,48 @@ export const questionRouter = createTRPCRouter({
       z.object({
         questionId: z.number(),
         optionId: z.number(),
+        nickname: z.string(),
         userUuid: z.string().uuid(),
       })
     )
-    .mutation(async ({ input: { questionId, optionId, userUuid }, ctx }) => {
-      // validate question and option
-      const question = await ctx.prisma.question.findFirst({
-        where: {
-          id: questionId,
-        },
-        include: {
-          options: true,
-        },
-      });
-      if (
-        !question ||
-        question.options.every((option) => option.id !== optionId)
-      ) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Invalid question or option",
+    .mutation(
+      async ({ input: { questionId, optionId, userUuid, nickname }, ctx }) => {
+        // validate question and option
+        const question = await ctx.prisma.question.findFirst({
+          where: {
+            id: questionId,
+          },
+          include: {
+            options: true,
+          },
+        });
+        if (
+          !question ||
+          question.options.every((option) => option.id !== optionId)
+        ) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "Invalid question or option",
+          });
+        }
+
+        // sync user and nickname, increment submission count
+        await ctx.prisma.user.upsert({
+          where: { uuid: userUuid },
+          update: { nickname, submissionCount: { increment: 1 } },
+          create: { uuid: userUuid, nickname, submissionCount: 1 },
+        });
+
+        // save submission
+        await ctx.prisma.submission.create({
+          data: {
+            questionId,
+            optionId,
+            userUuid,
+          },
         });
       }
-
-      // save submission
-      await ctx.prisma.submission.create({
-        data: {
-          questionId,
-          optionId,
-          userUuid,
-        },
-      });
-    }),
+    ),
 
   postQuestion: publicProcedure
     .input(z.object({ url: z.string().url() }))
