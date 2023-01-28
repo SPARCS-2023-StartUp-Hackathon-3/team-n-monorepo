@@ -8,8 +8,7 @@ import { api } from "../utils/api";
 const Questions: NextPage = () => {
   const { data: question } = api.question.randomQuestion.useQuery();
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { uuid, nickname } = useAuth();
+  // const { uuid, nickname } = useAuth();
 
   return (
     <>
@@ -19,9 +18,6 @@ const Questions: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <p>눈송이 00개</p>
-      </main>
-      <footer>
         <Image
           priority
           src="/logo.png"
@@ -29,7 +25,54 @@ const Questions: NextPage = () => {
           width={327}
           height={93}
         />
-      </footer>
+        <p>000점</p>
+
+        {question && (
+          <>
+            <Image
+              priority
+              src={question.url}
+              alt="MOCK"
+              width={320}
+              height={280}
+              style={{ objectFit: "contain" }}
+            />
+            <p>
+              눈이 보이지 않는 사람에게 위 이미지를 설명해 봅시다. 사람들은 어떤
+              선택지를 가장 많이 골랐을까요?
+            </p>
+            {question.options.map((option, index) => (
+              <div className="box" key={option.id}>
+                <span className="number">{index + 1}</span>
+                {option.text}
+              </div>
+            ))}
+          </>
+        )}
+      </main>
+      <style jsx>{`
+        .box {
+          position: relative;
+          max-width: 340px;
+          min-height: 50px;
+          padding: 20px;
+
+          background: #ffffff;
+          border: 1px solid #000000;
+          border-radius: 10px;
+        }
+        .number {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 19px;
+          height: 22px;
+
+          color: white;
+          background: #000000;
+          border-radius: 8.5px 0 6px;
+        }
+      `}</style>
     </>
   );
 };

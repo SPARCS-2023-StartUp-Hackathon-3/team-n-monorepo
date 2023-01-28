@@ -12,10 +12,10 @@ const useAuth = () => {
 
   const router = useRouter();
   useEffect(() => {
-    if (!uuid) {
+    if (!uuid || !nickname) {
       void router.replace("/");
     }
-  }, [uuid]);
+  }, [uuid, nickname]);
 
   const generateUser = (nickname: string) => {
     const newUUID = uuidv4();
