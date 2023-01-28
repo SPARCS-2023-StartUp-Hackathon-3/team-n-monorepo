@@ -3,6 +3,9 @@
   "description": "NOON chrome extension",
   "version": "1.0",
   "manifest_version": 3,
+  "chrome_url_overrides": {
+    "newtab": "popup.html"
+  },
   "action": {
     "default_popup": "popup.html",
     "default_icon": "hello_extensions.png"
@@ -21,7 +24,8 @@
     }
   ],
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "tabs"
   ],
   "host_permissions": ["https://team-n-web.vercel.app/"]
 }

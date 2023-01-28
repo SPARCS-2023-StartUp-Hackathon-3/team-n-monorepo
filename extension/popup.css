@@ -1,14 +1,70 @@
 body {
+  box-sizing: border-box;
   width: 470px;
   height: 350px;
-  padding: 24px;
+  padding: 44px;
 
-  background: linear-gradient(180deg, #ECF4FB 0%, rgba(205, 230, 253, 0) 100%);
+  /*background: linear-gradient(180deg, #ECF4FB 0%, rgba(205, 230, 253, 0) 100%);*/
+  background: rgba(234, 238, 38, 0.9);
+  /* background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: bottom;
+  background-position: left; */
 }
 
 .description {
   font-weight: 400;
   font-size: 14px;
+  font-family: 'Spoqa Han Sans Neo';
   line-height: 19px;
   color: #000000;
 }
+
+a.button1 {
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
+
+  border: 2px solid;
+  border-radius: 5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  padding: 4px 4px;
+  cursor: pointer;
+}
+
+.button1:hover {
+  border: 2px solid;
+  border-radius: 5px;
+  color: #000000;
+  background-color: rgba(234, 238, 38, 0.9);
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  padding: 4px 4px;
+  cursor: pointer;
+}
+
+.box {
+  border: 2px solid;
+  border-radius: 25px;
+  padding: 3%;
+  color: #000000;
+  background: #FFFFFF;
+}
+
+.mention {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.logo {
+  float: right;
+  object-fit: none;
+  mix-blend-mode: difference;
+}
+
