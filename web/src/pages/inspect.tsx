@@ -133,8 +133,12 @@ const Inspect: NextPage = () => {
             <button onClick={submit}>옷장에 집어넣기</button>
             </div>
           </div>
+          <div className="nextWrapper">
+          <div className="nextButton">
+            <Link href="/score">넘어 가기</Link>
+          </div>
+          </div>
         </div>
-        <Link href="/score">넘어 가기</Link>
       </main>
       <style jsx>{`
         .carouselWrapper {
@@ -200,7 +204,7 @@ const Inspect: NextPage = () => {
           text-align: center;
           color: #000000;
         }
-        button{
+        button {
           -webkit-appearance: none;
           -moz-appearance: none;
           appearance: none;
@@ -218,9 +222,24 @@ const Inspect: NextPage = () => {
           border-radius: 10px;
           cursor: pointer;
           transition: 0.5s;
-          margin: 100px;
+          margin-top: 100px;
 
           z-index: 1000;
+        }
+        .nextWrapper{
+          display: flex;
+          justify-content: center;
+          width: 100%
+          margin: auto;
+        }
+        .nextButton {
+          font-weight: 500;
+          font-size: 20px;
+          line-height: 24px;
+          text-align: center;
+          margin: 15px;
+          border-bottom: 2px solid;
+          width: 7%;
         }
       `}</style>
     </>
