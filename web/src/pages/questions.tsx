@@ -5,7 +5,6 @@ import Image from "next/image";
 import useAuth from "../hooks/useAuth";
 import { api } from "../utils/api";
 import { useEffect, useState } from "react";
-import useSWR from "swr";
 import Link from "next/link";
 
 export interface AnsweredQuestion {
@@ -19,7 +18,7 @@ const Questions: NextPage = () => {
   const { uuid, nickname } = useAuth();
 
   // 문제
-  const { data: question } = api.question.randomQuestion.useQuery(
+  const { data: question, refetch } = api.question.randomQuestion.useQuery(
     { userUuid: uuid ?? "" },
     {
       refetchOnWindowFocus: false,
@@ -41,6 +40,11 @@ const Questions: NextPage = () => {
         optionId: answerId,
         userUuid: uuid!,
       });
+      setTimeout(() => {
+        void refetch().then(() => {
+          setAnswerId(null);
+        });
+      }, 3000);
     }
   }, [question, answerId]);
 
