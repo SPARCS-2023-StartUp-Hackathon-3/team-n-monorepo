@@ -1,39 +1,17 @@
-import { v4 } from "uuid";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const rankingRouter = createTRPCRouter({
-  get: publicProcedure.query(({ ctx }) => {
-    return [
-      {
-        rank: 1,
-        userUuid: v4(),
-        nickname: "이재찬",
-        score: 42,
+  get: publicProcedure.query(async ({ ctx }) => {
+    const users = await ctx.prisma.user.findMany({
+      orderBy: {
+        submissionCount: "desc",
       },
-      {
-        rank: 2,
-        userUuid: v4(),
-        nickname: "AAA",
-        score: 41,
-      },
-      {
-        rank: 3,
-        userUuid: v4(),
-        nickname: "BBB",
-        score: 40,
-      },
-      {
-        rank: 4,
-        userUuid: v4(),
-        nickname: "CCC",
-        score: 4,
-      },
-      {
-        rank: 5,
-        userUuid: v4(),
-        nickname: "DDD",
-        score: 2,
-      },
-    ];
+    });
+    return users.map((user, index) => ({
+      rank: index + 1,
+      userUuid: user.uuid,
+      nickname: user.nickname,
+      score: user.submissionCount,
+    }));
   }),
 });
