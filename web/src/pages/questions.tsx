@@ -44,7 +44,43 @@ const Questions: NextPage = () => {
   const [answer, setAnswer] = useState<Option | null>(null);
 
   // 제출
-  const mutation = api.question.submitAnswer.useMutation();
+  const mutation = api.question.submitAnswer.useMutation({
+    onSuccess: () => {
+      if (question && answer && correctAnswer) {
+        if (countOfCorrectAnswer === answer.submitCount) {
+          // 정답
+          void mutate<AnsweredQuestion[]>(QUESTIONS_KEY, (state) => [
+            ...(state ?? []),
+            {
+              id: question.id,
+              url: question.url,
+              correctAnswer: answer.text,
+            },
+          ]);
+          setTimeout(() => {
+            setAnswer(null);
+            void refetch();
+          }, 1000);
+        } else {
+          // 오답
+          void mutate<AnsweredQuestion[]>(QUESTIONS_KEY, (state) => [
+            ...(state ?? []),
+            {
+              id: question.id,
+              url: question.url,
+              correctAnswer: correctAnswer.text,
+            },
+          ]);
+          setTimeout(() => {
+            void router.push("/inspect");
+          }, 1000);
+        }
+      }
+    },
+    onError: () => {
+      void router.push("/inspect");
+    },
+  });
   useEffect(() => {
     if (question && answer && correctAnswer) {
       // api 호출
@@ -54,34 +90,6 @@ const Questions: NextPage = () => {
         userUuid: uuid!,
         nickname: nickname!,
       });
-      if (countOfCorrectAnswer === answer.submitCount) {
-        // 정답
-        void mutate<AnsweredQuestion[]>(QUESTIONS_KEY, (state) => [
-          ...(state ?? []),
-          {
-            id: question.id,
-            url: question.url,
-            correctAnswer: answer.text,
-          },
-        ]);
-        setTimeout(() => {
-          setAnswer(null);
-          void refetch();
-        }, 3000);
-      } else {
-        // 오답
-        void mutate<AnsweredQuestion[]>(QUESTIONS_KEY, (state) => [
-          ...(state ?? []),
-          {
-            id: question.id,
-            url: question.url,
-            correctAnswer: correctAnswer.text,
-          },
-        ]);
-        setTimeout(() => {
-          void router.push("/inspect");
-        }, 3000);
-      }
     }
   }, [question, answer, correctAnswer]);
 

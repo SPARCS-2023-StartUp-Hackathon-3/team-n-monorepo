@@ -5,11 +5,33 @@ import Link from "next/link";
 import useSWR from "swr";
 import { type AnsweredQuestion, QUESTIONS_KEY } from "./questions";
 import useAuth from "../hooks/useAuth";
+import { useEffect, useState } from "react";
+import { api } from "../utils/api";
 
 const Inspect: NextPage = () => {
   const { uuid, nickname } = useAuth();
   const { data: questions } = useSWR<AnsweredQuestion[]>(QUESTIONS_KEY);
-  console.log(questions);
+
+  const [currentQuestion, setCurrentQuestion] =
+    useState<AnsweredQuestion | null>(null);
+
+  const [text, setText] = useState("");
+  useEffect(() => {
+    if (currentQuestion) {
+      setText(currentQuestion.correctAnswer);
+    }
+  }, [currentQuestion]);
+
+  const mutation = api.question.addOption.useMutation();
+  const submit = () => {
+    if (uuid && currentQuestion) {
+      mutation.mutate({
+        userUuid: uuid,
+        questionId: currentQuestion.id,
+        text,
+      });
+    }
+  };
 
   return (
     <>
@@ -30,30 +52,38 @@ const Inspect: NextPage = () => {
               fullWidth={833}
               fullHeight={650}
               items={new Array(9).fill(null).map((_, i) => {
-                const option = questions[i % questions.length];
+                const question = questions[i % questions.length];
                 return (
-                  <div className="mock" key={i}>
-                    <img
-                      className="image"
-                      src={option?.url || ""}
-                      alt={option?.correctAnswer || ""}
-                      width={500}
-                      height={500}
-                    />
-                  </div>
+                  <img
+                    className="image"
+                    src={question?.url || ""}
+                    alt={question?.correctAnswer || ""}
+                    width={500}
+                    height={500}
+                    key={i}
+                  />
                 );
               })}
               emitCurrentIndex={(index) => {
-                console.log(index);
+                setCurrentQuestion(questions[index % questions.length]!);
               }}
             />
           )}
-          <button>이 아이템 옷장에 집어넣기</button>
+          <textarea
+            className="input"
+            maxLength={125}
+            value={text}
+            onChange={(e) => {
+              setText(e.target.value);
+            }}
+          />
+          <button onClick={submit}>이 아이템 옷장에 집어넣기</button>
         </div>
         <Link href="/score">넘어 가기</Link>
       </main>
       <style jsx>{`
         .carouselWrapper {
+          position: relative;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -64,12 +94,6 @@ const Inspect: NextPage = () => {
           height: 100%;
           overflow: hidden;
         }
-        .mock {
-          width: 500px;
-          height: 500px;
-          background: black;
-          border-radius: 10px;
-        }
         .image {
           width: 100%;
           height: 100%;
@@ -77,6 +101,28 @@ const Inspect: NextPage = () => {
           user-select: none;
           -webkit-user-drag: none;
           border-radius: 10px;
+        }
+        .input {
+          z-index: 100;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 400px;
+          padding: 36px;
+
+          background: rgba(255, 255, 255, 0.8);
+          border: 1px solid #000000;
+          border-radius: 10px;
+          color: #7d7d7d;
+          text-align: center;
+
+          display: flex;
+          align-items: center;
+
+          white-space: pre-wrap;
+          word-break: break-all;
+          overflow: hidden;
         }
       `}</style>
     </>
