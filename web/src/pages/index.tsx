@@ -1,10 +1,10 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-
 import { api } from "../utils/api";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import useAuth from "../hooks/useAuth";
 
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
@@ -12,8 +12,12 @@ const Home: NextPage = () => {
   const router = useRouter();
   const [nickname, setNickname] = useState("");
 
+  const { generateUser } = useAuth();
   const handleSubmit = () => {
-    if (nickname.trim().length === 0) return;
+    const refinedNickname = nickname.trim();
+    if (refinedNickname.length === 0) return;
+
+    generateUser(refinedNickname);
     void router.push("/questions");
   };
 

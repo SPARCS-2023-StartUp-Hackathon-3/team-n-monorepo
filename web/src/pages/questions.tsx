@@ -3,11 +3,12 @@ import Head from "next/head";
 
 import { api } from "../utils/api";
 import Image from "next/image";
+import useAuth from "../hooks/useAuth";
 
 const Questions: NextPage = () => {
   const { data: question } = api.question.randomQuestion.useQuery();
 
-  console.log(question);
+  const { uuid, nickname } = useAuth();
 
   return (
     <>
