@@ -51,7 +51,13 @@ const Inspect: NextPage = () => {
         void router.push("/score");
       }
     }
-  }, [inspectedQuestions, questions]);
+  }, [inspectedQuestions, questions, router]);
+
+  useEffect(() => {
+    if (questions && questions.length === 0) {
+      void router.push("/");
+    }
+  }, [questions, router]);
 
   return (
     <>
@@ -61,7 +67,7 @@ const Inspect: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className="area" >
+        <div className="area">
           <ul className="circles">
             <li></li>
             <li></li>
@@ -79,64 +85,64 @@ const Inspect: NextPage = () => {
 
           <div className="question">
             <p>
-              직접 보지 않고 글만 읽어도 어떤 상품인지 알 수 있을 것 같다면 옷장에 담아주세요.
-              <br></br>혹시 방금 본 아이템들 중 설명이 부적절한 대체텍스트는 없었나요?
+              직접 보지 않고 글만 읽어도 어떤 상품인지 알 수 있을 것 같다면
+              옷장에 담아주세요.
+              <br></br>혹시 방금 본 아이템들 중 설명이 부적절한 대체텍스트는
+              없었나요?
               <br></br>옷장에 담기 전,{nickname}님이 직접 수정해 볼 수 있어요!
             </p>
           </div>
           <div className="bottomeWrapper">
             <div className="carouselWrapper">
-            {questions && (
-              <Carousel
-                fullWidth={750}
-                fullHeight={334}
-                items={new Array(9).fill(null).map((_, i) => {
-                  const question = questions[i % questions.length];
-                  return (
-                    <img
-                      className="image"
-                      src={question?.url || ""}
-                      alt={question?.correctAnswer || ""}
-                      width={500}
-                      height={500}
-                      key={i}
-                      style={{
-                        
-                        opacity: inspectedQuestions
-                          .map((q) => q.id)
-                          .includes(Number(question?.id))
-                          ? 0.1
-                          : 1,
-                        
-                      }}
-                    />
-                  );
-                })}
-                emitCurrentIndex={(index) => {
-                  setCurrentQuestion(questions[index % questions.length]!);
+              {questions && (
+                <Carousel
+                  fullWidth={750}
+                  fullHeight={334}
+                  items={new Array(9).fill(null).map((_, i) => {
+                    const question = questions[i % questions.length];
+                    return (
+                      <img
+                        className="image"
+                        src={question?.url || ""}
+                        alt={question?.correctAnswer || ""}
+                        width={500}
+                        height={500}
+                        key={i}
+                        style={{
+                          opacity: inspectedQuestions
+                            .map((q) => q.id)
+                            .includes(Number(question?.id))
+                            ? 0.1
+                            : 1,
+                        }}
+                      />
+                    );
+                  })}
+                  emitCurrentIndex={(index) => {
+                    setCurrentQuestion(questions[index % questions.length]!);
+                  }}
+                />
+              )}
+              <textarea
+                className="input"
+                maxLength={125}
+                value={text}
+                onChange={(e) => {
+                  setText(e.target.value);
+                }}
+                disabled={inspected}
+                style={{
+                  opacity: inspected ? 0.5 : 1,
+                  pointerEvents: inspected ? "none" : "auto",
                 }}
               />
-            )}
-            <textarea
-              className="input"
-              maxLength={125}
-              value={text}
-              onChange={(e) => {
-                setText(e.target.value);
-              }}
-              disabled={inspected}
-              style={{
-                opacity: inspected ? 0.5 : 1,
-                pointerEvents: inspected ? "none" : "auto",
-              }}
-            />
-            <button onClick={submit}>옷장에 집어넣기</button>
+              <button onClick={submit}>옷장에 집어넣기</button>
             </div>
           </div>
           <div className="nextWrapper">
-          <div className="nextButton">
-            <Link href="/score">넘어 가기</Link>
-          </div>
+            <div className="nextButton">
+              <Link href="/score">넘어 가기</Link>
+            </div>
           </div>
         </div>
       </main>

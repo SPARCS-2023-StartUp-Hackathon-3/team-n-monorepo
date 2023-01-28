@@ -4,6 +4,9 @@ import { api } from "../utils/api";
 import useAuth from "../hooks/useAuth";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { useEffect } from "react";
+import { mutate } from "swr";
+import { QUESTIONS_KEY } from "./questions";
 
 const Score: NextPage = () => {
   const { data: ranking } = api.ranking.get.useQuery();
@@ -15,6 +18,11 @@ const Score: NextPage = () => {
     retryUser();
     void router.push("/questions");
   };
+
+  // 초기화
+  useEffect(() => {
+    void mutate(QUESTIONS_KEY, []);
+  }, []);
 
   return (
     <>

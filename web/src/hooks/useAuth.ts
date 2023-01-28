@@ -15,7 +15,7 @@ const useAuth = () => {
     if (!uuid || !nickname) {
       void router.replace("/");
     }
-  }, [uuid, nickname]);
+  }, [uuid, nickname, router]);
 
   const generateUser = (nickname: string) => {
     const newUUID = uuidv4();
