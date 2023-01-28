@@ -210,7 +210,6 @@ const Questions: NextPage = () => {
           transform-origin: left;
         }
         .imgAlign {
-            display: flex;
             justify-content: center;
             mix-blend-mode: difference;
           }

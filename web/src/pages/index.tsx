@@ -131,14 +131,10 @@ const Home: NextPage = () => {
                     setNickname(e.target.value);
                   }}
                 />
+              <p className="p2">더 많은 사람들이 선택한 대체텍스트를 찾아 보세요!</p>
+              <button>시작하기</button>
             </form>
-            <p className="p2">더 많은 사람들이 선택한 대체텍스트를 찾아 보세요!</p>
-            <button>시작하기</button>
           </div>
-          <div className="toExtension">
-            <a href="www.google.com">NooN 확장 프로그램 써 보러 가기</a>
-          </div>
-        
         </div >
 
       </main>
@@ -154,16 +150,6 @@ const Home: NextPage = () => {
             color: #FFFFFF;
             mix-blend-mode: difference;
             will-change: opacity;
-          }
-          .toExtension {
-            font-style: normal;
-            font-weight: 400;
-            font-size: 15px;
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            margin: 15px;
-            line-height: 19px;
           }
           .ranking {
             margin-bottom: 50px;
