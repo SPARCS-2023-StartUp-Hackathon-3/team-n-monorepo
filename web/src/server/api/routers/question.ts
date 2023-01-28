@@ -233,12 +233,23 @@ export const questionRouter = createTRPCRouter({
         where: {
           id: questionId,
         },
+        include: {
+          options: true,
+        },
       });
       if (!question) {
         throw new TRPCError({
           code: "BAD_REQUEST",
           message: "Invalid question",
         });
+      }
+
+      // 만약 text가 기존 option이랑 whitespace 제외하고 같다면, 새로 만들지 않고 바로 종료한다.
+      const existingOption = question.options.find(
+        (o) => o.text.replace(/\s/g, "") === text.replace(/\s/g, "")
+      );
+      if (existingOption) {
+        return existingOption;
       }
 
       // 가장 많이 투표된 두 옵션을 찾고, 그 두 옵션이 아닌 다른 옵션들은 disable 처리
