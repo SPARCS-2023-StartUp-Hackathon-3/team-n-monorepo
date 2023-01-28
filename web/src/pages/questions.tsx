@@ -99,13 +99,23 @@ const Questions: NextPage = () => {
       </Head>
       <main>
         <Link href="/inspect">임시 링크</Link>
-        <Image
-          priority
-          src="/logo.png"
-          alt="NooN logo"
-          width={327}
-          height={93}
-        />
+
+        <div className="area" >
+          <ul className="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </div>
+        <div className="imgAlign">
+          <Image
+            priority
+            src="/logo_questions.png"
+            alt="NooN logo"
+            width={237}
+            height={168}
+          />
+        </div>
         <p>
           {nickname}님, 반갑습니다! 온라인 쇼핑몰에서 이미지를 볼 수 없는 분들을
           위해 왼쪽 사진의 아이템을 제가 대신 설명하려고 해요. 사람들이 가장
@@ -190,6 +200,11 @@ const Questions: NextPage = () => {
           background-color: black;
           transform-origin: left;
         }
+        .imgAlign {
+            display: flex;
+            justify-content: center;
+            mix-blend-mode: difference;
+          }
       `}</style>
     </>
   );
