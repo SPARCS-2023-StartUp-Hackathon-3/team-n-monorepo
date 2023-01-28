@@ -77,7 +77,7 @@ const Home: NextPage = () => {
             <Image priority src="/fig2.png" alt="" width={197} height={211} />
           </div>
           <div className="backgroundImg1">
-            <Image priority src="/main1.png" alt="" width={323} height={503} />
+            <Image priority src="/main1.png" alt="" width={505} height={585} />
           </div>
           <div className="backgroundImg2">
             <Image priority src="/main2.png" alt="" width={312} height={328} />
@@ -164,7 +164,7 @@ const Home: NextPage = () => {
           }
           .area {
             min-height: 95vh;
-            padding-top: 80px;
+            padding-top: 60px;
           }
           .middle {
             text-align: center;
@@ -173,7 +173,7 @@ const Home: NextPage = () => {
             will-change: opacity;
           }
           .ranking {
-            margin-bottom: 32px;
+            margin-bottom: 25px;
             line-height: 1.8;
           }
           .impact {
@@ -257,7 +257,6 @@ const Home: NextPage = () => {
           }
           .backgroundImg1 {
             position: absolute;
-            left: 0;
             top: 0;
           }
           .backgroundImg2 {
