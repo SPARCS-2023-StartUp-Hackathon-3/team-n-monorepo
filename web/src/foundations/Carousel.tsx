@@ -183,8 +183,6 @@ function Carousel({ fullWidth, fullHeight, items, emitCurrentIndex }: Props) {
         .arrowButton {
           font-size: 35px;
           color: black;
-          mix-blend-mode: difference;
-          border: 3px solid #ffffff;
           cursor: pointer;
           user-select: none;
           margin: 0 2rem;
@@ -197,6 +195,7 @@ function Carousel({ fullWidth, fullHeight, items, emitCurrentIndex }: Props) {
           width: ${fullWidth}px;
           height: ${fullWidth}px;
           overflow-x: hidden;
+          margin: -180px;
         }
         .item {
           position: absolute;

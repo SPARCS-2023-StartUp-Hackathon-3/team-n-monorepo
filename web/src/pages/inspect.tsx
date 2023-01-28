@@ -88,8 +88,8 @@ const Inspect: NextPage = () => {
             <div className="carouselWrapper">
             {questions && (
               <Carousel
-                fullWidth={833}
-                fullHeight={650}
+                fullWidth={750}
+                fullHeight={334}
                 items={new Array(9).fill(null).map((_, i) => {
                   const question = questions[i % questions.length];
                   return (
@@ -101,11 +101,13 @@ const Inspect: NextPage = () => {
                       height={500}
                       key={i}
                       style={{
+                        
                         opacity: inspectedQuestions
                           .map((q) => q.id)
                           .includes(Number(question?.id))
                           ? 0.1
                           : 1,
+                        
                       }}
                     />
                   );
@@ -143,12 +145,20 @@ const Inspect: NextPage = () => {
           align-items: center;
           flex-direction: column;
 
-          max-width: 1000px;
+          max-width: 80%;
           width: 100%;
           height: 100%;
           overflow: hidden;
-
+          margin: auto;
           text-align: center;
+        }
+        .bottomWrapper {
+          display: inline-block;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: auto:
         }
         .image {
           width: 100%;
@@ -157,7 +167,6 @@ const Inspect: NextPage = () => {
           user-select: none;
           -webkit-user-drag: none;
           border-radius: 10px;
-
         }
         .input {
           z-index: 100;
@@ -191,30 +200,26 @@ const Inspect: NextPage = () => {
           text-align: center;
           color: #000000;
         }
-        .bottomWrapper {
-          width: 100%;
-          text-align: center;
-
-        }
         button{
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
 
-            font-weight: 700;
-            font-size: 30px;
-            line-height: 36px;
+          font-weight: 700;
+          font-size: 30px;
+          line-height: 36px;
 
-            background: #000000;
-            color: #FFFFFF;
-            padding: 25px 105px;
-            display: inline-block;
-            width: auto;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.5s;
-          }
+          background: #000000;
+          color: #FFFFFF;
+          padding: 25px 105px;
+          display: inline-block;
+          width: auto;
+          border: none;
+          border-radius: 10px;
+          cursor: pointer;
+          transition: 0.5s;
+          margin: 100px;
+        }
       `}</style>
     </>
   );

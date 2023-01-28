@@ -127,19 +127,19 @@ const Home: NextPage = () => {
                 handleSubmit();
               }}
             >
-              <input
-                id="nickname"
-                name="nickname"
-                placeholder="닉네임을 입력하세요"
-                value={nickname}
-                onChange={(e) => {
-                  setNickname(e.target.value);
-                }}
-              />
-              <p className="p2">
-                더 많은 사람들이 선택한 대체텍스트를 찾아 보세요!
-              </p>
-              <button>시작하기</button>
+            <input
+              id="nickname"
+              name="nickname"
+              placeholder="닉네임을 입력하세요"
+              value={nickname}
+              onChange={(e) => {
+                setNickname(e.target.value);
+              }}
+            />
+            <p className="p2">
+              더 많은 사람들이 선택한 대체텍스트를 찾아 보세요!
+            </p>
+            <button>시작하기</button>
             </form>
           </div>
         </div>
