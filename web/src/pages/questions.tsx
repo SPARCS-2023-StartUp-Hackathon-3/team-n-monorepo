@@ -23,7 +23,7 @@ const Questions: NextPage = () => {
   const { data: answeredQuestions } = useSWR<AnsweredQuestion[]>(QUESTIONS_KEY);
   const router = useRouter();
   const { uuid, nickname } = useAuth();
-
+  
   // 문제
   const { data: question, refetch } = api.question.randomQuestion.useQuery(
     { userUuid: uuid ?? "" },
@@ -118,7 +118,7 @@ const Questions: NextPage = () => {
             <li></li>
           </ul>
 
-
+          <p className="backgroundScore"> {answeredQuestions?.length} </p>
           <div className="imgAlign">
             <Image
               priority
@@ -312,6 +312,25 @@ const Questions: NextPage = () => {
           display: flex;
           justify-content: center;
           mix-blend-mode: difference;
+        }
+        .backgroundScore {
+          z-index: -1;
+          position: absolute;
+          right: 0px;
+          top: 777.87px;
+
+          font-weight: 300;
+          font-size: 656px;
+          line-height: 0px;
+          
+          display: flex;
+          align-items: center;
+          letter-spacing: -0.1em;
+
+          color: #9B9B9B;
+
+          mix-blend-mode: difference;
+          transform: rotate(-23.74deg);
         }
       `}</style>
     </>
