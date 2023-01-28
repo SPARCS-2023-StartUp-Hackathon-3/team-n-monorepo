@@ -107,8 +107,6 @@ const Questions: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Link href="/inspect">임시 링크</Link>
-
         <div className="area" >
           <ul className="circles">
             <li></li>
