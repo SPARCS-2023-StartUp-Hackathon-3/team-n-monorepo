@@ -11,8 +11,8 @@ export class TranslationService {
       .post<unknown>("/v1/papago/n2mt", `source=en&target=ko&text=${en}`, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-          "X-Naver-Client-Id": "0ORpsoEpzmUBFto8osQy",
-          "X-Naver-Client-Secret": "J0wJ5ok4f3",
+          "X-Naver-Client-Id": "abdsZ4P4wfWxfwWwluf7",
+          "X-Naver-Client-Secret": "emn1T4Bw4Z",
         },
       })
       .then((res) => res.data);
