@@ -1,6 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Carousel from "../foundations/Carousel";
+import Link from "next/link";
 
 const Inspect: NextPage = () => {
   return (
@@ -11,6 +12,7 @@ const Inspect: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <Link href="/score">임시 링크</Link>
         <p>
           오늘 본 패션을 00님이 더 잘 읽을 수 있다면 고쳐주세요! 수정을 마친
           대체텍스트는 엔터를 눌러 옷장에 넣을 수 있어요.

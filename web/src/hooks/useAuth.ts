@@ -26,12 +26,17 @@ const useAuth = () => {
     void mutate(UUID_KEY, null);
     void mutate(NICKNAME_KEY, null);
   };
+  const retryUser = () => {
+    const newUUID = uuidv4();
+    void mutate(UUID_KEY, newUUID);
+  };
 
   return {
     uuid,
     nickname,
     generateUser,
     resetUser,
+    retryUser,
   };
 };
 export default useAuth;

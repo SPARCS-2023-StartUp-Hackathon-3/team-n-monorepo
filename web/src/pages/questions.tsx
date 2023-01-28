@@ -6,6 +6,7 @@ import useAuth from "../hooks/useAuth";
 import { api } from "../utils/api";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
+import Link from "next/link";
 
 export interface AnsweredQuestion {
   id: number;
@@ -48,6 +49,7 @@ const Questions: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <Link href="/inspect">임시 링크</Link>
         <Image
           priority
           src="/logo.png"
