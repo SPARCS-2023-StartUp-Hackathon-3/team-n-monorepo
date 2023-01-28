@@ -31,12 +31,40 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        
         <div className="area" >
           <ul className="circles">
             <li></li>
             <li></li>
             <li></li>
           </ul>
+          <div className="backgroundImg1">
+            <Image
+                  priority
+                  src="/main1.png"
+                  alt=""
+                  width={323}
+                  height={503}
+            />
+          </div>
+          <div className="backgroundImg2">
+            <Image
+                  priority
+                  src="/main2.png"
+                  alt=""
+                  width={312}
+                  height={328}
+            />
+          </div>
+          <div className="backgroundImg3">
+            <Image
+                  priority
+                  src="/main3.png"
+                  alt=""
+                  width={280}
+                  height={298}
+            />
+          </div>
 
           <div className="middle">
             <div className="ranking">
@@ -69,8 +97,8 @@ const Home: NextPage = () => {
                 height={99}
               />
             </div>
-            <p>패션을 들려주는 새로운 눈</p>
-
+            <p className="p1">패션을 들려주는 새로운 눈</p>
+            
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -86,7 +114,7 @@ const Home: NextPage = () => {
                   setNickname(e.target.value);
                 }}
               />
-              <p>더 많은 사람들이 선택한 대체텍스트*를 찾아 보세요!</p>
+              <p className="p2">더 많은 사람들이 선택한 대체텍스트*를 찾아 보세요!</p>
               <button>시작하기</button>
             </form>
           </div>
@@ -97,14 +125,17 @@ const Home: NextPage = () => {
         </div >
 
       </main>
-      <style jsx>
-        {`
+      <style jsx>{`
           body {
-            background: white;
+            background-color: white;
+            background-image: src("/main1.png")
             font-family: "SCoreDream";
+            font-style: normal;
           }
           .middle {
             text-align: center;
+            color: #FFFFFF;
+            mix-blend-mode: difference;
           }
           .right {
             position: absolute;
@@ -113,10 +144,9 @@ const Home: NextPage = () => {
             margin: 15px;
           }
           .ranking {
+            margin-bottom: 50px;
           }
           .impact {
-            font-family: "SCoreDream";
-            font-style: normal;
             font-weight: 600;
             font-size: 30px;
             line-height: 36px;
@@ -130,11 +160,58 @@ const Home: NextPage = () => {
           .subTitle {
             display: flex;
             justify-content: center;
-            mix-blend-mode: difference;
             margin: 10px;
+          }
+          .p1{
+            font-weight: 300;
+            font-size: 20px;
+            line-height: 24px;
+            margin: 40px;
+          }
+          .p2{
+            font-weight: 300;
+            font-size: 15px;
+            line-height: 18px;
+            margin: 15px;
+          }
+          button{
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+
+            font-weight: 700;
+            font-size: 30px;
+            line-height: 38px;
+
+            background: #FFFFFF;
+            color: #000000;
+            margin: 0;
+            padding: 25px 140px;
+            display: inline-block;
+            width: auto;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.5s;
           }
 
           /** background css */
+          .backgroundImg1{
+            position: absolute;
+            left: 0px;
+            top: 0px;
+          }
+          .backgroundImg2{
+            position: absolute;
+            right: 140px;
+            top: 15px;
+          }
+          .backgroundImg3{
+            position: absolute;
+            left: 222px;
+            bottom: 0px;
+          }
+
           .area {
             z-index: -2;
             padding: 50px;
