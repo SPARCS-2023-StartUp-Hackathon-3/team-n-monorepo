@@ -29,6 +29,7 @@ model Question {
     id          Int          @id @default(autoincrement())
     createdAt   DateTime     @default(now())
     url         String
+    s3Url       String?
     submissions Submission[]
     options     Option[]
 }

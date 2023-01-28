@@ -16,7 +16,6 @@ export class TranslationService {
         },
       })
       .then((res) => res.data);
-    console.log("translate data", data);
     const {
       message: {
         result: { translatedText },
