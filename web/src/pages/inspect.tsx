@@ -92,7 +92,7 @@ const Inspect: NextPage = () => {
               <br></br>옷장에 담기 전,{nickname}님이 직접 수정해 볼 수 있어요!
             </p>
           </div>
-          <div className="bottomeWrapper">
+          <div className="bottomWrapper">
             <div className="carouselWrapper">
               {questions && (
                 <Carousel
@@ -156,19 +156,15 @@ const Inspect: NextPage = () => {
           align-items: center;
           flex-direction: column;
 
-          max-width: 80%;
-          width: 100%;
+          width: 80%;
           height: 100%;
           overflow: hidden;
-          margin: auto;
-          text-align: center;
         }
         .bottomWrapper {
           width: 100%;
           display: flex;
           justify-content: center;
           align-items: center;
-          margin: auto;
         }
         .image {
           width: 100%;
