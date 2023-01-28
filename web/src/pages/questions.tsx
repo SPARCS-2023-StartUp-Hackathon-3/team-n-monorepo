@@ -106,56 +106,57 @@ const Questions: NextPage = () => {
             <li></li>
             <li></li>
           </ul>
-        </div>
-        <div className="imgAlign">
-          <Image
-            priority
-            src="/logo_questions.png"
-            alt="NooN logo"
-            width={237}
-            height={168}
-          />
-        </div>
-        <p>
-          {nickname}님, 반갑습니다! 온라인 쇼핑몰에서 이미지를 볼 수 없는 분들을
-          위해 왼쪽 사진의 아이템을 제가 대신 설명하려고 해요. 사람들이 가장
-          많이 고른 선택지를 맞춰 주세요!
-        </p>
-        <p>000점</p>
-
-        {question && (
-          <>
-            <img
-              src={question.url}
-              alt="secret"
-              width={320}
-              height={280}
-              style={{ objectFit: "contain" }}
+          <div className="imgAlign">
+            <Image
+              priority
+              src="/logo_questions.png"
+              alt="NooN logo"
+              width={237}
+              height={168}
             />
-            {options.map((option, index) => (
-              <div
-                className="box"
-                key={option.id}
-                onClick={() => setAnswer(option)}
-              >
-                <span className="text">{option.text}</span>
-                <span className="number">{index + 1}</span>
-                <span
-                  className="percent"
-                  style={{
-                    transform: `scaleX(${
-                      answer
-                        ? (option.submitCount +
-                            (answer.id === option.id ? 1 : 0)) /
-                          sum
-                        : 0
-                    })`,
-                  }}
-                />
-              </div>
-            ))}
-          </>
-        )}
+          </div>
+          <p>
+            {nickname}님, 반갑습니다! 온라인 쇼핑몰에서 이미지를 볼 수 없는 분들을
+            위해 왼쪽 사진의 아이템을 제가 대신 설명하려고 해요. 사람들이 가장
+            많이 고른 선택지를 맞춰 주세요!
+          </p>
+          <p>000점</p>
+
+          {question && (
+            <>
+              <img
+                src={question.url}
+                alt="secret"
+                width={320}
+                height={280}
+                style={{ objectFit: "contain" }}
+              />
+              {options.map((option, index) => (
+                <div
+                  className="box"
+                  key={option.id}
+                  onClick={() => setAnswer(option)}
+                >
+                  <span className="text">{option.text}</span>
+                  <span className="number">{index + 1}</span>
+                  <span
+                    className="percent"
+                    style={{
+                      transform: `scaleX(${
+                        answer
+                          ? (option.submitCount +
+                              (answer.id === option.id ? 1 : 0)) /
+                            sum
+                          : 0
+                      })`,
+                    }}
+                  />
+                </div>
+              ))}
+            </>
+          )}
+        
+        </div>
       </main>
       <style jsx>{`
         .box {
