@@ -7,6 +7,7 @@ export class TranslationService {
   });
 
   async enToKr(en: string): Promise<string> {
+    console.log("enToKr", en);
     const data = await this.instance
       .post<unknown>("/v1/papago/n2mt", `source=en&target=ko&text=${en}`, {
         headers: {
