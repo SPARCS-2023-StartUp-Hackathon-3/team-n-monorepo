@@ -21,6 +21,7 @@ model Inference {
     id        Int      @id @default(autoincrement())
     createdAt DateTime @default(now())
     url       String
+    optionId  Int?
     result    String
 }
 
