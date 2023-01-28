@@ -16,18 +16,21 @@ export interface AnsweredQuestion {
 export const QUESTIONS_KEY = "/answeredQuestions";
 
 const Questions: NextPage = () => {
-  const { uuid } = useAuth();
+  const { uuid, nickname } = useAuth();
+
+  // 문제
   const { data: question } = api.question.randomQuestion.useQuery(
     { userUuid: uuid ?? "" },
     {
       refetchOnWindowFocus: false,
     }
   );
-
-  const [answerId, setAnswerId] = useState<null | number>(null);
   const sum =
     question?.options?.reduce((prev, option) => prev + option.submitCount, 1) ??
     1;
+
+  // 출제자가 고른 정답
+  const [answerId, setAnswerId] = useState<null | number>(null);
 
   // 제출
   const mutation = api.question.submitAnswer.useMutation();
@@ -57,6 +60,11 @@ const Questions: NextPage = () => {
           width={327}
           height={93}
         />
+        <p>
+          {nickname}님, 반갑습니다! 온라인 쇼핑몰에서 이미지를 볼 수 없는 분들을
+          위해 왼쪽 사진의 아이템을 제가 대신 설명하려고 해요. 사람들이 가장
+          많이 고른 선택지를 맞춰 주세요!
+        </p>
         <p>000점</p>
 
         {question && (
@@ -69,10 +77,6 @@ const Questions: NextPage = () => {
               height={280}
               style={{ objectFit: "contain" }}
             />
-            <p>
-              눈이 보이지 않는 사람에게 위 이미지를 설명해 봅시다. 사람들은 어떤
-              선택지를 가장 많이 골랐을까요?
-            </p>
             {question.options.map((option, index) => (
               <div
                 className="box"
