@@ -8,6 +8,7 @@ import useAuth from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 import { api } from "../utils/api";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const Inspect: NextPage = () => {
   const { uuid, nickname } = useAuth();
@@ -60,70 +61,104 @@ const Inspect: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <p>
-          보이지 않아도 글을 듣고 어떤 상품인지 알 수 있다면 옷장에 담아주세요.
-          혹시 방금 본 아이템들 중 설명이 부적절한 대체텍스트는 없었나요? 옷장에
-          담기 전, {nickname}님이 직접 대체텍스트를 수정할 수 있어요!
-        </p>
-        <div className="carouselWrapper">
-          {questions && (
-            <Carousel
-              fullWidth={833}
-              fullHeight={650}
-              items={new Array(9).fill(null).map((_, i) => {
-                const question = questions[i % questions.length];
-                return (
-                  <img
-                    className="image"
-                    src={question?.url || ""}
-                    alt={question?.correctAnswer || ""}
-                    width={500}
-                    height={500}
-                    key={i}
-                    style={{
-                      opacity: inspectedQuestions
-                        .map((q) => q.id)
-                        .includes(Number(question?.id))
-                        ? 0.1
-                        : 1,
-                    }}
-                  />
-                );
-              })}
-              emitCurrentIndex={(index) => {
-                setCurrentQuestion(questions[index % questions.length]!);
+        <div className="area" >
+          <ul className="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+          <div className="imgAlign">
+            <Image
+              priority
+              src="/logo_questions.png"
+              alt="NooN logo"
+              width={237}
+              height={168}
+            />
+          </div>
+
+          <div className="question">
+            <p>
+              직접 보지 않고 글만 읽어도 어떤 상품인지 알 수 있을 것 같다면 옷장에 담아주세요.
+              <br></br>혹시 방금 본 아이템들 중 설명이 부적절한 대체텍스트는 없었나요?
+              <br></br>옷장에 담기 전,{nickname}님이 직접 수정해 볼 수 있어요!
+            </p>
+          </div>
+          <div className="bottomeWrapper">
+            <div className="carouselWrapper">
+            {questions && (
+              <Carousel
+                fullWidth={750}
+                fullHeight={334}
+                items={new Array(9).fill(null).map((_, i) => {
+                  const question = questions[i % questions.length];
+                  return (
+                    <img
+                      className="image"
+                      src={question?.url || ""}
+                      alt={question?.correctAnswer || ""}
+                      width={500}
+                      height={500}
+                      key={i}
+                      style={{
+                        
+                        opacity: inspectedQuestions
+                          .map((q) => q.id)
+                          .includes(Number(question?.id))
+                          ? 0.1
+                          : 1,
+                        
+                      }}
+                    />
+                  );
+                })}
+                emitCurrentIndex={(index) => {
+                  setCurrentQuestion(questions[index % questions.length]!);
+                }}
+              />
+            )}
+            <textarea
+              className="input"
+              maxLength={125}
+              value={text}
+              onChange={(e) => {
+                setText(e.target.value);
+              }}
+              disabled={inspected}
+              style={{
+                opacity: inspected ? 0.5 : 1,
+                pointerEvents: inspected ? "none" : "auto",
               }}
             />
-          )}
-          <textarea
-            className="input"
-            maxLength={125}
-            value={text}
-            onChange={(e) => {
-              setText(e.target.value);
-            }}
-            disabled={inspected}
-            style={{
-              opacity: inspected ? 0.5 : 1,
-              pointerEvents: inspected ? "none" : "auto",
-            }}
-          />
-          <button onClick={submit}>이 아이템 옷장에 집어넣기</button>
+            <button onClick={submit}>옷장에 집어넣기</button>
+            </div>
+          </div>
         </div>
         <Link href="/score">넘어 가기</Link>
       </main>
       <style jsx>{`
         .carouselWrapper {
           position: relative;
+          justify-content: center;
           display: flex;
           justify-content: center;
           align-items: center;
           flex-direction: column;
 
-          max-width: 1000px;
+          max-width: 80%;
           width: 100%;
           height: 100%;
           overflow: hidden;
+          margin: auto;
+          text-align: center;
+        }
+        .bottomWrapper {
+          display: inline-block;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: auto:
         }
         .image {
           width: 100%;
@@ -155,6 +190,35 @@ const Inspect: NextPage = () => {
           word-break: break-all;
           overflow: hidden;
           resize: none;
+        }
+        .imgAlign {
+          display: flex;
+          justify-content: center;
+          mix-blend-mode: difference;
+        }
+        .question {
+          text-align: center;
+          color: #000000;
+        }
+        button{
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+
+          font-weight: 700;
+          font-size: 30px;
+          line-height: 36px;
+
+          background: #000000;
+          color: #FFFFFF;
+          padding: 25px 105px;
+          display: inline-block;
+          width: auto;
+          border: none;
+          border-radius: 10px;
+          cursor: pointer;
+          transition: 0.5s;
+          margin: 100px;
         }
       `}</style>
     </>
