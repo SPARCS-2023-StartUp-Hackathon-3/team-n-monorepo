@@ -34,6 +34,42 @@ const Home: NextPage = () => {
             <li></li>
             <li></li>
           </ul>
+
+          <svg
+            className="path1"
+            width="600"
+            height="425"
+            viewBox="0 0 400 325"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g style={{ mixBlendMode: "difference" }}>
+              <path
+                className="path"
+                d="M0.713728 278.044C17.3115 289.725 45.6887 267.807 58.0618 258.939C115.742 217.622 166.045 161.721 211.407 107.334C219.905 97.1379 228.243 86.8169 235.853 75.9008C240.252 69.5903 244.807 62.1723 247.162 54.787C250.717 43.6667 242.01 46.6103 235.498 49.8929C224.189 55.5998 214.567 64.1643 204.682 72.0072C193.884 80.5516 183.473 89.6691 173.977 99.7156C156.008 118.735 139.273 143.057 139.711 170.619C140.059 191.934 150.787 217.7 175.264 216.918C201.142 216.087 224.905 200.322 246.235 187.02C271.741 171.122 435.838 19.6782 459.367 0.999978"
+                stroke="white"
+                strokeMiterlimit="10"
+              />
+            </g>
+          </svg>
+          <svg
+            className="path2"
+            width="498"
+            height="600"
+            viewBox="0 0 400 480"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g style={{ mixBlendMode: "difference" }}>
+              <path
+                className="path"
+                d="M-194 526.168C-168.532 482.605 -140.9 440.142 -111.691 398.999C-92.2854 371.652 -72.0136 344.815 -49.9099 319.577C-29.2051 295.936 -5.58047 269.766 23.4063 256.292C35.2963 250.765 49.3401 247.546 59.5537 257.147C76.0732 272.663 72.7316 299.344 64.2165 318.012C61.0192 325.015 52.6928 342.507 43.6116 343.206C23.262 344.771 37.6832 304.305 40.5364 296.047C55.435 252.807 84.1997 212.852 114.03 178.612C161.679 123.907 221.051 80.1003 284.931 46.1162C284.931 46.1162 364.187 2.24305 440.523 1"
+                stroke="white"
+                strokeMiterlimit="10"
+              />
+            </g>
+          </svg>
+
           <div className="backgroundFig1">
             <Image priority src="/fig1.png" alt="" width={247} height={187} />
           </div>
@@ -217,6 +253,27 @@ const Home: NextPage = () => {
             position: absolute;
             left: 222px;
             bottom: 0;
+          }
+
+          .path1 {
+            position: absolute;
+            right: 0;
+            bottom: 100px;
+          }
+          .path2 {
+            position: absolute;
+            left: 0;
+            top: 100px;
+          }
+          .path {
+            stroke-dasharray: 1100;
+            stroke-dashoffset: 1100;
+            animation: dash 1s linear forwards;
+          }
+          @keyframes dash {
+            to {
+              stroke-dashoffset: 0;
+            }
           }
         `}
       </style>
