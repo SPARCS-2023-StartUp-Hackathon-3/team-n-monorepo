@@ -1,4 +1,5 @@
 import { groupBy } from "lodash";
+import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const questionRouter = createTRPCRouter({
@@ -23,4 +24,22 @@ export const questionRouter = createTRPCRouter({
     };
     return result;
   }),
+
+  submitAnswer: publicProcedure
+    .input(
+      z.object({
+        questionId: z.number(),
+        optionId: z.number(),
+        userUuid: z.string().uuid(),
+      })
+    )
+    .mutation(async ({ input: { questionId, optionId, userUuid }, ctx }) => {
+      await ctx.prisma.submission.create({
+        data: {
+          questionId,
+          optionId,
+          userUuid,
+        },
+      });
+    }),
 });

@@ -34,11 +34,12 @@ model Question {
 }
 
 model Option {
-    id         Int      @id @default(autoincrement())
-    createdAt  DateTime @default(now())
+    id         Int          @id @default(autoincrement())
+    createdAt  DateTime     @default(now())
     text       String
     questionId Int
-    question   Question @relation(fields: [questionId], references: [id])
+    question   Question     @relation(fields: [questionId], references: [id])
+    Submission Submission[]
 
     @@index([questionId])
 }
@@ -47,20 +48,13 @@ model Submission {
     id         Int      @id @default(autoincrement())
     createdAt  DateTime @default(now())
     questionId Int
-    anonUserId Int
-    answer     Int
+    optionId   Int
+    userUuid   String
     question   Question @relation(fields: [questionId], references: [id])
-    anonUser   AnonUser @relation(fields: [anonUserId], references: [id])
+    option     Option   @relation(fields: [optionId], references: [id])
 
     @@index([questionId])
-    @@index([anonUserId])
-}
-
-model AnonUser {
-    id          Int          @id @default(autoincrement())
-    createdAt   DateTime     @default(now())
-    nickname    String
-    submissions Submission[]
+    @@index([optionId])
 }
 
 // Necessary for Next auth
