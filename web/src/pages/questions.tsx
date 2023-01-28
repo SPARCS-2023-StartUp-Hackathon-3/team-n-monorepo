@@ -4,11 +4,17 @@ import Head from "next/head";
 import Image from "next/image";
 import useAuth from "../hooks/useAuth";
 import { api } from "../utils/api";
+import { useState } from "react";
 
 const Questions: NextPage = () => {
   const { data: question } = api.question.randomQuestion.useQuery();
 
   // const { uuid, nickname } = useAuth();
+
+  const [answer, setAnswer] = useState<null | number>(null);
+  const sum =
+    question?.options?.reduce((prev, option) => prev + option.submitCount, 0) ??
+    0;
 
   return (
     <>
@@ -42,9 +48,21 @@ const Questions: NextPage = () => {
               선택지를 가장 많이 골랐을까요?
             </p>
             {question.options.map((option, index) => (
-              <div className="box" key={option.id}>
+              <div
+                className="box"
+                key={option.id}
+                onClick={() => setAnswer(option.id)}
+              >
+                <span className="text">{option.text}</span>
                 <span className="number">{index + 1}</span>
-                {option.text}
+                <span
+                  className="percent"
+                  style={{
+                    transform: `scaleX(${
+                      answer ? option.submitCount / sum : 0
+                    })`,
+                  }}
+                />
               </div>
             ))}
           </>
@@ -61,16 +79,37 @@ const Questions: NextPage = () => {
           border: 1px solid #000000;
           border-radius: 10px;
         }
+        .text {
+          position: relative;
+          color: white;
+          mix-blend-mode: difference;
+          z-index: 1;
+        }
         .number {
           position: absolute;
           top: 0;
           left: 0;
           width: 19px;
           height: 22px;
-
-          color: white;
-          background: #000000;
           border-radius: 8.5px 0 6px;
+          z-index: 1;
+
+          color: black;
+          mix-blend-mode: difference;
+          background: white;
+          background-blend-mode: difference;
+        }
+        .percent {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border-radius: 10px;
+
+          transition: transform 1s;
+          background-color: black;
+          transform-origin: left;
         }
       `}</style>
     </>
