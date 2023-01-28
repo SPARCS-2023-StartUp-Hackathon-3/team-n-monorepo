@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { groupBy } from "lodash";
+import { groupBy, sample } from "lodash";
 import { z } from "zod";
 import { InferenceRequestService } from "../../util/InferenceRequestService";
 import { TranslationService } from "../../util/TranslationService";
@@ -7,7 +7,17 @@ import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const questionRouter = createTRPCRouter({
   randomQuestion: publicProcedure.query(async ({ ctx }) => {
+    const allQuestionId = await ctx.prisma.question.findMany({
+      select: {
+        id: true,
+      },
+    });
+    const randomQuestionId = sample(allQuestionId)!.id;
+
     const question = await ctx.prisma.question.findFirstOrThrow({
+      where: {
+        id: randomQuestionId,
+      },
       include: {
         options: true,
         submissions: true,
