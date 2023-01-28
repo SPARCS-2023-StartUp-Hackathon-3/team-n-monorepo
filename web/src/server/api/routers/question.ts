@@ -49,6 +49,7 @@ export const questionRouter = createTRPCRouter({
         url: question.url,
         options: question.options
           .filter((o) => !o.disabled)
+          .slice(0, 3)
           .map((option) => ({
             id: option.id,
             text: option.text,
@@ -193,7 +194,7 @@ export const questionRouter = createTRPCRouter({
 
       console.log(createdOptions);
 
-      const result = await ctx.prisma.question.create({
+      await ctx.prisma.question.create({
         data: {
           url,
           s3Url: `https://sparcs-2023-startup-hackathon-n-1.s3.ap-northeast-2.amazonaws.com/${key}`,
