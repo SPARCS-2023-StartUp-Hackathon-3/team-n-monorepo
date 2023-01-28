@@ -5,7 +5,6 @@ import Image from "next/image";
 import useAuth from "../hooks/useAuth";
 import { api } from "../utils/api";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import useSWR, { mutate } from "swr";
 import { inferRouterOutputs } from "@trpc/server";
 import { type AppRouter } from "../server/api/root";
@@ -24,6 +23,7 @@ const Questions: NextPage = () => {
   const { data: answeredQuestions } = useSWR<AnsweredQuestion[]>(QUESTIONS_KEY);
   const router = useRouter();
   const { uuid, nickname } = useAuth();
+
   // 문제
   const { data: question, refetch } = api.question.randomQuestion.useQuery(
     { userUuid: uuid ?? "" },
@@ -31,6 +31,7 @@ const Questions: NextPage = () => {
       refetchOnWindowFocus: false,
     }
   );
+
   const options = question?.options ?? [];
   const countOfCorrectAnswer = Math.max(
     ...options.map((option) => option.submitCount)
@@ -74,7 +75,7 @@ const Questions: NextPage = () => {
           ]);
           setTimeout(() => {
             void router.push("/inspect");
-          }, 1000);
+          }, 2000);
         }
       }
     },
@@ -98,6 +99,9 @@ const Questions: NextPage = () => {
   useEffect(() => {
     void mutate(QUESTIONS_KEY, []);
   }, []);
+
+  const isWrong =
+    question && answer && countOfCorrectAnswer !== answer?.submitCount;
 
   return (
     <>
@@ -124,13 +128,33 @@ const Questions: NextPage = () => {
           </div>
 
           <div className="question">
-            <p>
-              {nickname}님, 반갑습니다!
-              <br></br>쇼핑몰에서 이미지를 볼 수 없는 분들께 제가 아래 이미지를
-              설명하려고 해요.
-              <br></br>어떤 설명이 제일 괜찮나요? 사람들이 가장 많이 고른
-              선택지를 맞춰주세요!
-            </p>
+            {isWrong ? (
+              <p>{nickname}님, 다른 사람들은 아무래도 보는 눈이 다른가 봐요!</p>
+            ) : answeredQuestions?.length === 0 ? (
+              <p>
+                {nickname}님, 반갑습니다!
+                <br></br>쇼핑몰에서 이미지를 볼 수 없는 분들께 제가 아래
+                이미지를 설명하려고 해요.
+                <br></br>어떤 설명이 제일 괜찮나요? 사람들이 가장 많이 고른
+                선택지를 맞혀주세요!
+              </p>
+            ) : (
+              <p>
+                {nickname}님, 고마워요! 다른 아이템도 한 번 살펴볼까요?
+                <br></br>
+                {answeredQuestions && answeredQuestions.length % 2 === 0 ? (
+                  <>
+                    어떤 설명이 제일 괜찮나요? 사람들이 가장 많이 고른 선택지를
+                    맞혀주세요!
+                  </>
+                ) : (
+                  <>
+                    쇼핑몰에서 이미지를 볼 수 없는 분들께 제가 아래 이미지를
+                    설명하려고 해요.
+                  </>
+                )}
+              </p>
+            )}
           </div>
 
           {question && (
@@ -149,7 +173,11 @@ const Questions: NextPage = () => {
                 <div
                   className="box"
                   key={option.id}
-                  onClick={() => setAnswer(option)}
+                  onClick={() => {
+                    if (!answer) {
+                      setAnswer(option);
+                    }
+                  }}
                 >
                   <span className="text">{option.text}</span>
                   <span className="number">{index + 1}</span>
