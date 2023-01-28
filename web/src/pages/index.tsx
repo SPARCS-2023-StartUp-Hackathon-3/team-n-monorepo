@@ -7,19 +7,16 @@ import { useRouter } from "next/router";
 import useAuth from "../hooks/useAuth";
 
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
+  const { data: ranking } = api.ranking.get.useQuery();
+  const sum = ranking?.reduce((prev, curr) => prev + curr.score, 0);
 
   const router = useRouter();
   const [nickname, setNickname] = useState("");
 
-  /*const [trigger, setTrigger] = useState(false);*/
-
   const { generateUser } = useAuth();
   const handleSubmit = () => {
     const refinedNickname = nickname.trim();
-    if (refinedNickname.length === 0) return;
-
-    generateUser(refinedNickname);
+    generateUser(refinedNickname.length === 0 ? "익명의 눈" : refinedNickname);
     void router.push("/questions");
   };
 
@@ -69,14 +66,15 @@ const Home: NextPage = () => {
           <div className="middle">
             <div className="ranking">
               <ul>
-                <li>1등 닉네임닉 00벌</li>
-                <li>2등 닉네임닉 00벌</li>
-                <li>3등 닉네임닉 00벌</li>
-                <li>4등 닉네임닉 00벌</li>
+                {ranking?.slice(0, 4).map((user) => (
+                  <li>
+                    {user.rank}등 {user.nickname} {user.score}벌
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="impact">
-              <p>총 000벌을 읽었어요!</p>
+              <p>총 {sum ?? "..."}벌을 읽었어요!</p>
             </div>
             <div className="imgAlign">
               <Image
