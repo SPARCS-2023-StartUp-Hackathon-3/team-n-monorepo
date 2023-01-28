@@ -19,17 +19,11 @@ const Inspect: NextPage = () => {
           <Carousel
             fullWidth={1000}
             fullHeight={650}
-            items={[
-              <div className="mock">Hello</div>,
-              <div className="mock">Hello</div>,
-              <div className="mock">Hello</div>,
-              <div className="mock">Hello</div>,
-              <div className="mock">Hello</div>,
-              <div className="mock">Hello</div>,
-              <div className="mock">Hello</div>,
-              <div className="mock">Hello</div>,
-              <div className="mock">Hello</div>,
-            ]}
+            items={new Array(9).fill(null).map((_, i) => (
+              <div className="mock" key={i}>
+                Hello
+              </div>
+            ))}
             emitCurrentIndex={(index) => {
               console.log(index);
             }}
