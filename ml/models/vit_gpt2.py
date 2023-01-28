@@ -1,3 +1,4 @@
+import requests
 import torch
 from PIL import Image
 from transformers import (AutoTokenizer, VisionEncoderDecoderModel,
@@ -15,10 +16,10 @@ num_beams = 4
 gen_kwargs = {"max_length": max_length, "num_beams": num_beams}
 
 
-def vit_gpt2(image_paths):
+def vit_gpt2(urls: list[str]) -> list[str]:
   images = []
-  for image_path in image_paths:
-    i_image = Image.open(image_path)
+  for url in urls:
+    i_image = Image.open(requests.get(url, stream=True).raw)
     if i_image.mode != "RGB":
       i_image = i_image.convert(mode="RGB")
 
