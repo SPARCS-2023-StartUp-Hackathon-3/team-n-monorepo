@@ -49,6 +49,7 @@ export const questionRouter = createTRPCRouter({
         url: question.url,
         options: question.options
           .filter((o) => !o.disabled)
+          .slice(0, 3)
           .map((option) => ({
             id: option.id,
             text: option.text,
