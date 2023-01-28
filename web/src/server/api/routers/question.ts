@@ -1,6 +1,8 @@
 import { TRPCError } from "@trpc/server";
-import { groupBy } from "lodash";
+import { groupBy, sample } from "lodash";
 import { z } from "zod";
+import { InferenceRequestService } from "../../util/InferenceRequestService";
+import { TranslationService } from "../../util/TranslationService";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const questionRouter = createTRPCRouter({
@@ -11,7 +13,17 @@ export const questionRouter = createTRPCRouter({
       })
     )
     .query(async ({ ctx }) => {
+      const allQuestionId = await ctx.prisma.question.findMany({
+        select: {
+          id: true,
+        },
+      });
+      const randomQuestionId = sample(allQuestionId)!.id;
+
       const question = await ctx.prisma.question.findFirstOrThrow({
+        where: {
+          id: randomQuestionId,
+        },
         include: {
           options: true,
           submissions: true,
@@ -68,5 +80,41 @@ export const questionRouter = createTRPCRouter({
           userUuid,
         },
       });
+    }),
+
+  postQuestion: publicProcedure
+    .input(z.object({ url: z.string().url() }))
+    .mutation(async ({ ctx, input: { url } }) => {
+      const inferenceResult = await new InferenceRequestService().getMultiple([
+        url,
+      ]);
+
+      const firstInferenceResult = inferenceResult[0];
+      if (!firstInferenceResult) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Invalid url",
+        });
+      }
+
+      const translationService = new TranslationService();
+
+      const result = await ctx.prisma.question.create({
+        data: {
+          url,
+          options: {
+            create: await Promise.all(
+              firstInferenceResult.result.map(async (r) => ({
+                text: await translationService.enToKr(r.result),
+                textEn: r.result,
+                sourceType: "model",
+                sourceId: r.model,
+              }))
+            ),
+          },
+        },
+      });
+
+      return result;
     }),
 });
