@@ -1,5 +1,4 @@
 import { exampleRouter } from "./routers/example";
-import { noonRouter } from "./routers/noon";
 import { questionRouter } from "./routers/question";
 import { rankingRouter } from "./routers/ranking";
 import { createTRPCRouter } from "./trpc";
@@ -11,7 +10,6 @@ import { createTRPCRouter } from "./trpc";
  */
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
-  noon: noonRouter,
   question: questionRouter,
   ranking: rankingRouter,
 });
