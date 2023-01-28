@@ -93,6 +93,8 @@ const Score: NextPage = () => {
           line-height: 36px;
           margin-top: 64px;
           text-align: center;
+          color: white;
+          mix-blend-mode: difference;
         }
         .p2 {
           font-weight: 800;
@@ -100,13 +102,15 @@ const Score: NextPage = () => {
           line-height: 48px;
           margin-top: 13px;
           text-align: center;
+          color: white;
+          mix-blend-mode: difference;
         }
         .p3 {
           font-weight: 300;
           font-size: 25px;
           line-height: 30px;
           text-align: center;
-          margin-bottom: 32px;
+          margin-bottom: 60px;
         }
         button {
           -webkit-appearance: none;
