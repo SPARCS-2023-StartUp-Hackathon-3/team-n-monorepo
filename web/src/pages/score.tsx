@@ -1,19 +1,13 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { api } from "../utils/api";
-import useAuth, { UUID_KEY } from "../hooks/useAuth";
+import useAuth from "../hooks/useAuth";
 import { useRouter } from "next/router";
 
 const Score: NextPage = () => {
-  // const { data: ranking } = api.question.ranking.useQuery();
-  const { retryUser } = useAuth();
-  const uuid = "1";
-  const ranking = [
-    { uuid: "1", nickname: "닉네임1", score: 6 },
-    { uuid: "2", nickname: "닉네임2", score: 5 },
-  ];
-  const meIndex = ranking.findIndex((ele) => ele.uuid === uuid);
-  const me = ranking[meIndex];
+  const { data: ranking } = api.ranking.get.useQuery();
+  const { retryUser, uuid } = useAuth();
+  const me = ranking?.find((ele) => ele.userUuid === uuid);
 
   const router = useRouter();
   const retry = () => {
@@ -31,7 +25,7 @@ const Score: NextPage = () => {
       <main>
         <p>닉네임 님, 총 {me?.score}벌</p>
         <p>
-          {ranking.length}명 중에 {meIndex + 1}등!
+          {ranking?.length}명 중에 {me?.rank}등!
         </p>
         <button onClick={retry}>다시 시작하기</button>
       </main>
