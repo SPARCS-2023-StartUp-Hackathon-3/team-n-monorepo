@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import NextCors from "nextjs-cors";
 import { z } from "zod";
 import { InferenceService } from "../../../server/util/InferenceService";

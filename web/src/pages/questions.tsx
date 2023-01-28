@@ -6,7 +6,7 @@ import useAuth from "../hooks/useAuth";
 import { api } from "../utils/api";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { mutate } from "swr";
+import useSWR, { mutate } from "swr";
 import { inferRouterOutputs } from "@trpc/server";
 import { type AppRouter } from "../server/api/root";
 import { useRouter } from "next/router";
@@ -21,6 +21,7 @@ export interface AnsweredQuestion {
 export const QUESTIONS_KEY = "/answeredQuestions";
 
 const Questions: NextPage = () => {
+  const { data: answeredQuestions } = useSWR(QUESTIONS_KEY);
   const router = useRouter();
   const { uuid, nickname } = useAuth();
   // 문제
@@ -106,8 +107,6 @@ const Questions: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Link href="/inspect">임시 링크</Link>
-
         <div className="area" >
           <ul className="circles">
             <li></li>
@@ -174,14 +173,14 @@ const Questions: NextPage = () => {
       </main>
       <style jsx>{`
         .imgBox {
-          position: relative;
+          position: absolute;
           left: 100px;
-          top: 30px;
+          top: 326px;
         }
         .box {
           position: relative;
-          left: 600px;
-          bottom: 300px;
+          right: -625px;
+          top: 10px;
           width: 630px;
           min-height: 90px;
           padding: 36px;
