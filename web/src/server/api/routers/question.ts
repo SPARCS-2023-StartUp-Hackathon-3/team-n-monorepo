@@ -101,6 +101,35 @@ export const questionRouter = createTRPCRouter({
             userUuid,
           },
         });
+
+        // 가장 많이 나타난 옵션을 찾고
+        const submissionsByOption = await ctx.prisma.submission.findMany({
+          where: { questionId },
+          select: { optionId: true },
+        });
+
+        const mostOccuredOptionId = first(
+          Object.entries(groupBy(submissionsByOption, "optionId")).sort(
+            (a, b) => b[1].length - a[1].length
+          )
+        )?.[0];
+        if (!mostOccuredOptionId) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "No option found",
+          });
+        }
+        // 그 옵션을 Inference에 기록해준다
+        const option = await ctx.prisma.option.findFirstOrThrow({
+          where: { id: Number(mostOccuredOptionId) },
+        });
+        await ctx.prisma.inference.create({
+          data: {
+            url: question.url,
+            optionId: option.id,
+            result: option.text,
+          },
+        });
       }
     ),
 

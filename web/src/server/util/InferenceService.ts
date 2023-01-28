@@ -18,6 +18,9 @@ export class InferenceService {
           in: urls,
         },
       },
+      orderBy: {
+        id: "desc", // 마지막에 만들어진 걸 사용하도록 함
+      },
     });
 
     console.log("cachedResult", cachedResult);
