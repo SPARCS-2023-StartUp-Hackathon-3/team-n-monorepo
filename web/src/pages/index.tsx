@@ -30,7 +30,7 @@ const Home: NextPage = () => {
           onSubmit={(e) => {
             e.preventDefault();
             alert(nickname);
-            router.push("/question");
+            void router.push("/questions");
           }}
         >
           <input
@@ -38,14 +38,16 @@ const Home: NextPage = () => {
             name="nickname"
             placeholder="닉네임을 입력하세요"
             value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
+            onChange={(e) => {
+              setNickname(e.target.value);
+            }}
           />
           <ul>
             <li>1등 닉네임 00개</li>
             <li>2등 닉네임 00개</li>
             <li>3등 닉네임 00개</li>
           </ul>
-          <button type="button">플레이 하러 가기</button>
+          <button>플레이 하러 가기</button>
         </form>
       </main>
       <footer>
