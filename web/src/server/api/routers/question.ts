@@ -1,7 +1,7 @@
 import { S3 } from "@aws-sdk/client-s3";
 import { TRPCError } from "@trpc/server";
 import axios from "axios";
-import { first, groupBy } from "lodash";
+import { first, groupBy, orderBy } from "lodash";
 import { v4 } from "uuid";
 import { z } from "zod";
 import { InferenceRequestService } from "../../util/InferenceRequestService";
@@ -47,11 +47,13 @@ export const questionRouter = createTRPCRouter({
       const result = {
         id: question.id,
         url: question.url,
-        options: question.options.map((option) => ({
-          id: option.id,
-          text: option.text,
-          submitCount: submisssionsGrouped[option.id]?.length || 0,
-        })),
+        options: question.options
+          .filter((o) => !o.disabled)
+          .map((option) => ({
+            id: option.id,
+            text: option.text,
+            submitCount: submisssionsGrouped[option.id]?.length || 0,
+          })),
       };
       return result;
     }),
@@ -225,6 +227,23 @@ export const questionRouter = createTRPCRouter({
         });
       }
 
+      // 가장 많이 투표된 두 옵션을 찾고, 그 두 옵션이 아닌 다른 옵션들은 disable 처리
+      const existingOptions = await ctx.prisma.option.findMany({
+        where: { questionId, disabled: false },
+        include: { submissions: { select: { id: true } } },
+      });
+      const existingOptionsOrdered = orderBy(
+        existingOptions,
+        (o) => o.submissions.length,
+        "desc"
+      );
+      const notTop2Options = existingOptionsOrdered.slice(2);
+      await ctx.prisma.option.updateMany({
+        where: { id: { in: notTop2Options.map((o) => o.id) } },
+        data: { disabled: true },
+      });
+
+      // 그 후에 옵션을 만들어서 이 옵션이 세 번째 옵션이 되도록 함
       const result = await ctx.prisma.option.create({
         data: {
           text,

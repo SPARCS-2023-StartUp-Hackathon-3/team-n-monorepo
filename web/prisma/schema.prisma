@@ -42,6 +42,7 @@ model Option {
     sourceType  String
     sourceId    String
     questionId  Int
+    disabled    Boolean      @default(false)
     question    Question     @relation(fields: [questionId], references: [id])
     submissions Submission[]
 
