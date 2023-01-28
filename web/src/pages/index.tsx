@@ -88,7 +88,7 @@ const Home: NextPage = () => {
 
           <div className="middle">
             <div className="ranking">
-              <ul style={{minHeight: "144px"}}>
+              <ul style={{ minHeight: "144px" }}>
                 {ranking?.slice(0, 4).map((user) => (
                   <li key={user.userUuid}>
                     <span style={{ display: "inline-block", minWidth: 32 }}>
@@ -146,6 +146,7 @@ const Home: NextPage = () => {
                 onChange={(e) => {
                   setNickname(e.target.value);
                 }}
+                maxLength={8}
               />
               <p className="p2">
                 더 많은 사람들이 선택한 대체텍스트를 찾아 보세요!
