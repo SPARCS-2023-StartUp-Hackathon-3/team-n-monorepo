@@ -35,15 +35,15 @@ model Question {
 }
 
 model Option {
-    id         Int          @id @default(autoincrement())
-    createdAt  DateTime     @default(now())
-    text       String
-    textEn     String?
-    sourceType String
-    sourceId   String
-    questionId Int
-    question   Question     @relation(fields: [questionId], references: [id])
-    Submission Submission[]
+    id          Int          @id @default(autoincrement())
+    createdAt   DateTime     @default(now())
+    text        String
+    textEn      String?
+    sourceType  String
+    sourceId    String
+    questionId  Int
+    question    Question     @relation(fields: [questionId], references: [id])
+    submissions Submission[]
 
     @@index([questionId])
 }

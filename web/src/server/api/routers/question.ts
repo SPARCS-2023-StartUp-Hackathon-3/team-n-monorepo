@@ -1,7 +1,7 @@
 import { S3 } from "@aws-sdk/client-s3";
 import { TRPCError } from "@trpc/server";
 import axios from "axios";
-import { groupBy, sample } from "lodash";
+import { first, groupBy } from "lodash";
 import { v4 } from "uuid";
 import { z } from "zod";
 import { InferenceRequestService } from "../../util/InferenceRequestService";
@@ -15,26 +15,35 @@ export const questionRouter = createTRPCRouter({
         userUuid: z.string(),
       })
     )
-    .query(async ({ ctx }) => {
-      const allQuestionId = await ctx.prisma.question.findMany({
-        select: {
-          id: true,
-        },
+    .query(async ({ ctx, input: { userUuid } }) => {
+      // 유저가 응답하지 않은 모든 질문을 가져온다
+      const userOptions = await ctx.prisma.option.findMany({
+        select: { questionId: true },
+        where: { submissions: { some: { userUuid } } },
       });
-      const randomQuestionId = sample(allQuestionId)!.id;
+      const userQuestionIds = userOptions.map((option) => option.questionId);
+      const allQuestions = await ctx.prisma.question.findMany({
+        select: { id: true },
+        where: { id: { notIn: userQuestionIds } },
+      });
 
+      // 그 중에서 하나를 선택한다 (현재는 그냥 첫번째)
+      const randomQuestionId = first(allQuestions)?.id;
+      if (!randomQuestionId) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "이 유저는 모든 질문에 답변했습니다! 만세!",
+        });
+      }
+
+      // 질문을 가져온다.
       const question = await ctx.prisma.question.findFirstOrThrow({
-        where: {
-          id: randomQuestionId,
-        },
-        include: {
-          options: true,
-          submissions: true,
-        },
+        where: { id: randomQuestionId },
+        include: { options: true, submissions: true },
       });
 
+      // 응답값을 만들기 위해 submission을 집게해 option을 만든다
       const submisssionsGrouped = groupBy(question.submissions, "optionId");
-
       const result = {
         id: question.id,
         url: question.url,
