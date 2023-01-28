@@ -7,9 +7,13 @@ import { api } from "../utils/api";
 import { useState } from "react";
 
 const Questions: NextPage = () => {
-  const { data: question } = api.question.randomQuestion.useQuery();
-
-  // const { uuid, nickname } = useAuth();
+  const { uuid } = useAuth();
+  const { data: question } = api.question.randomQuestion.useQuery(
+    { userUuid: uuid ?? "" },
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
 
   const [answer, setAnswer] = useState<null | number>(null);
   const sum =
