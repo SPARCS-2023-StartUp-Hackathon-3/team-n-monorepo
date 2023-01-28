@@ -1,13 +1,14 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 
-import { api } from "../utils/api";
 import Image from "next/image";
 import useAuth from "../hooks/useAuth";
+import { api } from "../utils/api";
 
 const Questions: NextPage = () => {
   const { data: question } = api.question.randomQuestion.useQuery();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { uuid, nickname } = useAuth();
 
   return (
