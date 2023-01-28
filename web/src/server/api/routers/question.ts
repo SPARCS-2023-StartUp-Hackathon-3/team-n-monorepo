@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { groupBy } from "lodash";
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
@@ -34,6 +35,26 @@ export const questionRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input: { questionId, optionId, userUuid }, ctx }) => {
+      // validate question and option
+      const question = await ctx.prisma.question.findFirst({
+        where: {
+          id: questionId,
+        },
+        include: {
+          options: true,
+        },
+      });
+      if (
+        !question ||
+        question.options.every((option) => option.id !== optionId)
+      ) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Invalid question or option",
+        });
+      }
+
+      // save submission
       await ctx.prisma.submission.create({
         data: {
           questionId,

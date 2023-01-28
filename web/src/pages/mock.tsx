@@ -8,8 +8,8 @@ const Mock: NextPage = () => {
   function triggerMutation() {
     mutation.mutate({
       questionId: 1,
-      optionId: 1,
-      userUuid: "d7f7f7f7-f7f7-f7f7-f7f7-f7f7f7f7f7f7",
+      optionId: 4,
+      userUuid: "32033077-fd0f-452f-bbcf-c4e67cf84ca7",
     });
   }
   return (
