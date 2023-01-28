@@ -41,33 +41,33 @@ const Home: NextPage = () => {
           <div className="middle">
             <div className="ranking">
               <ul>
-                <li>1등 닉네임닉  00벌</li>
-                <li>2등 닉네임닉  00벌</li>
-                <li>3등 닉네임닉  00벌</li>
-                <li>4등 닉네임닉  00벌</li>
+                <li>1등 닉네임닉 00벌</li>
+                <li>2등 닉네임닉 00벌</li>
+                <li>3등 닉네임닉 00벌</li>
+                <li>4등 닉네임닉 00벌</li>
               </ul>
             </div>
             <div className="impact">
               <p>총 000벌을 읽었어요!</p>
-            </div>  
+            </div>
             <div className="imgAlign">
-            <Image
-              priority
-              src="/logo.png"
-              alt="NooN 로고"
-              width={382}
-              height={122}
-            />
+              <Image
+                priority
+                src="/logo.png"
+                alt="NooN 로고"
+                width={382}
+                height={122}
+              />
             </div>
 
             <div className="subTitle">
-            <Image
-              priority
-              src="/sublogo.png"
-              alt="for Fashion"
-              width={207}
-              height={99}
-            />
+              <Image
+                priority
+                src="/sublogo.png"
+                alt="for Fashion"
+                width={207}
+                height={99}
+              />
             </div>
             <p>패션을 들려주는 새로운 눈</p>
 
@@ -89,7 +89,6 @@ const Home: NextPage = () => {
               <p>더 많은 사람들이 선택한 대체텍스트*를 찾아 보세요!</p>
               <button>시작하기</button>
             </form>
-
           </div>
           <div className="right">
             <a href="www.google.com">NooN 확장 프로그램 써 보러 가기</a>
@@ -98,52 +97,52 @@ const Home: NextPage = () => {
         </div >
 
       </main>
-      <style jsx>{`
-        body{
-          background: white;
-          font-family: 'SCoreDream';
-        }
-        .middle{
-          text-align: center;
-        }
-        .right{
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          margin: 15px;
-        }
-        .ranking{
-        }
-        .impact{
-          font-family: 'SCoreDream';
-          font-style: normal;
-          font-weight: 600;
-          font-size: 30px;
-          line-height: 36px;
-          margin: 20px;
-        }
-        .imgAlign{
-          display: flex;
-          justify-content: center;
-          mix-blend-mode: difference;
-        }
-        .subTitle{
-          display: flex;
-          justify-content: center;
-          mix-blend-mode: difference;
-          margin: 10px;
-        }
-
-
-        /** background css */
-        .area{
-          z-index: -2;
-          padding: 50px;
-          width: 100%;
-          height:100%;
+      <style jsx>
+        {`
+          body {
+            background: white;
+            font-family: "SCoreDream";
           }
-      
-        .circles{
+          .middle {
+            text-align: center;
+          }
+          .right {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            margin: 15px;
+          }
+          .ranking {
+          }
+          .impact {
+            font-family: "SCoreDream";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 30px;
+            line-height: 36px;
+            margin: 20px;
+          }
+          .imgAlign {
+            display: flex;
+            justify-content: center;
+            mix-blend-mode: difference;
+          }
+          .subTitle {
+            display: flex;
+            justify-content: center;
+            mix-blend-mode: difference;
+            margin: 10px;
+          }
+
+          /** background css */
+          .area {
+            z-index: -2;
+            padding: 50px;
+            width: 100%;
+            height: 100%;
+          }
+
+          .circles {
             z-index: -1;
             position: absolute;
             top: 0;
@@ -151,61 +150,64 @@ const Home: NextPage = () => {
             width: 100%;
             height: 100%;
             overflow: hidden;
-        }
-        
-        .circles li{
+          }
+
+          .circles li {
             position: absolute;
             display: block;
             list-style: none;
             background: rgba(234, 238, 38, 0.9);
             animation: animate 25s infinite ease-in;
             bottom: -150px;
-        }
-        
-        .circles li:nth-child(1){
+          }
+
+          .circles li:nth-child(1) {
             left: 140%;
             width: 1547px;
             height: 1400px;
             transform: rotate(45deg);
             animation-delay: 0s;
             animation-duration: 45s;
-        }
-        
-        .circles li:nth-child(2){
+          }
+
+          .circles li:nth-child(2) {
             left: 10%;
             width: 800px;
             height: 700px;
             animation-duration: 35s;
-        }
-        
-        .circles li:nth-child(3){
+          }
+
+          .circles li:nth-child(3) {
             left: -10%;
             width: 500px;
             height: 400px;
             animation-duration: 23s;
-        }
-        
-        @keyframes animate {  
-            0%{
-                top: -1000px; left: -500px;
-                transform: rotate(0deg);
-                opacity: 1;
-                border-radius: 50%;
+          }
+
+          @keyframes animate {
+            0% {
+              top: -1000px;
+              left: -500px;
+              transform: rotate(0deg);
+              opacity: 1;
+              border-radius: 50%;
             }
-            50%{
-                top: 200px; left: 50px; 
-                transform: rotate(360deg);
-                opacity: 0.5;
-                border-radius: 100%;
+            50% {
+              top: 200px;
+              left: 50px;
+              transform: rotate(360deg);
+              opacity: 0.5;
+              border-radius: 100%;
             }
-            100%{
-                top: -1000px; left: -500px;
-                transform: rotate(720deg);
-                opacity: 1;
-                border-radius: 80%;
+            100% {
+              top: -1000px;
+              left: -500px;
+              transform: rotate(720deg);
+              opacity: 1;
+              border-radius: 80%;
             }
-        }
-      `}
+          }
+        `}
       </style>
     </>
   );
