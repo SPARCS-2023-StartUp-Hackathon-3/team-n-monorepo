@@ -7,6 +7,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       },
       body: JSON.stringify({
         urls: request.urls,
+        experimental: true,
       }),
     }).then((response) => {
       response.json().then((res) => {

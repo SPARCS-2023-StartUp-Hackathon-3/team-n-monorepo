@@ -3,9 +3,12 @@ const allResults = {}; // { url: alt }
 
 function callAPI(imageNodes) {
   // API 요청할 이미지 url 추출
+  console.log(imageNodes);
   const urls = imageNodes
     .filter(
-      (node) => !node.hasAttribute("alt") && allResults[node.src] === undefined
+      (node) =>
+        (!node.hasAttribute("alt") && allResults[node.src] === undefined) ||
+        node.id == "bigimg",
     )
     .map((node) => node.src);
 
@@ -27,7 +30,7 @@ function callAPI(imageNodes) {
           node.setAttribute("alt", targetAlt);
         }
       });
-    }
+    },
   );
 }
 
@@ -62,6 +65,7 @@ setTimeout(() => {
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
   if (msg.from === "popup" && msg.subject === "DOMInfo") {
     const count = Object.keys(allResults).length;
+    console.log(Object.keys(allResults));
     response(count);
   }
 });

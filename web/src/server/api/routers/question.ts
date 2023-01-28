@@ -169,22 +169,26 @@ export const questionRouter = createTRPCRouter({
           });
         });
 
-      const inferenceResult = await new InferenceRequestService().getMultiple([
-        url,
-      ]);
+      // 기존 질문을 삭제한다
+      await ctx.prisma.question.deleteMany({
+        where: { url },
+      });
 
-      const firstInferenceResult = inferenceResult[0];
-      if (!firstInferenceResult) {
+      // python에서 inference 결과를 받아온다
+      const inferenceResult = first(
+        await new InferenceRequestService().getMultiple([url])
+      );
+      if (!inferenceResult) {
         throw new TRPCError({
           code: "BAD_REQUEST",
           message: "Invalid url",
         });
       }
 
+      // inference 결과를 번역하고, 이를 통해서 생성할 옵션을 만든다
       const translationService = new TranslationService();
-
       const createdOptions = await Promise.all(
-        firstInferenceResult.result.map(async (r) => ({
+        inferenceResult.result.map(async (r) => ({
           text: await translationService.enToKr(r.result),
           textEn: r.result,
           sourceType: "model",
@@ -192,7 +196,16 @@ export const questionRouter = createTRPCRouter({
         }))
       );
 
-      console.log(createdOptions);
+      // 첫 번째 옵션 기반으로 Inference 객체를 만듬
+      const firstOption = first(createdOptions);
+      if (firstOption) {
+        await ctx.prisma.inference.create({
+          data: {
+            url,
+            result: firstOption.text,
+          },
+        });
+      }
 
       await ctx.prisma.question.create({
         data: {
