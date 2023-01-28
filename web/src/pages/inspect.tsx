@@ -4,8 +4,10 @@ import Carousel from "../foundations/Carousel";
 import Link from "next/link";
 import useSWR from "swr";
 import { type AnsweredQuestion, QUESTIONS_KEY } from "./questions";
+import useAuth from "../hooks/useAuth";
 
 const Inspect: NextPage = () => {
+  const { uuid, nickname } = useAuth();
   const { data: questions } = useSWR<AnsweredQuestion[]>(QUESTIONS_KEY);
   console.log(questions);
 
@@ -17,10 +19,10 @@ const Inspect: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Link href="/score">임시 링크</Link>
         <p>
-          오늘 본 패션을 00님이 더 잘 읽을 수 있다면 고쳐주세요! 수정을 마친
-          대체텍스트는 엔터를 눌러 옷장에 넣을 수 있어요.
+          보이지 않아도 글을 듣고 어떤 상품인지 알 수 있다면 옷장에 담아주세요.
+          혹시 방금 본 아이템들 중 설명이 부적절한 대체텍스트는 없었나요? 옷장에
+          담기 전, {nickname}님이 직접 대체텍스트를 수정할 수 있어요!
         </p>
         <div className="carouselWrapper">
           {questions && (
@@ -46,7 +48,9 @@ const Inspect: NextPage = () => {
               }}
             />
           )}
+          <button>이 아이템 옷장에 집어넣기</button>
         </div>
+        <Link href="/score">넘어 가기</Link>
       </main>
       <style jsx>{`
         .carouselWrapper {

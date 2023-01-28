@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 
 const Score: NextPage = () => {
   const { data: ranking } = api.ranking.get.useQuery();
-  const { retryUser, uuid } = useAuth();
+  const { retryUser, uuid, nickname } = useAuth();
   const me = ranking?.find((ele) => ele.userUuid === uuid);
 
   const router = useRouter();
@@ -23,9 +23,15 @@ const Score: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <p>닉네임 님, 총 {me?.score}벌</p>
+        <p>
+          {nickname} 님, 총 {me?.score}벌
+        </p>
         <p>
           {ranking?.length}명 중에 {me?.rank}등!
+        </p>
+        <p>
+          {nickname}님 덕분에 눈 NooN 이 패션을 더 잘 들려줄 수 있게 되었어요
+          감사해요 :)
         </p>
         <button onClick={retry}>다시 시작하기</button>
       </main>
