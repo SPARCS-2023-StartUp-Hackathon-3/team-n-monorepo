@@ -1,19 +1,19 @@
 import axios from "axios";
 import { z } from "zod";
-
+import { prisma } from "../db";
 export class TranslationService {
   private instance = axios.create({
     baseURL: "https://openapi.naver.com",
   });
 
-  async enToKr(en: string): Promise<string> {
+  async enToKr(en: string, requestedFrom: string): Promise<string> {
     console.log("enToKr", en);
     const data = await this.instance
       .post<unknown>("/v1/papago/n2mt", `source=en&target=ko&text=${en}`, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-          "X-Naver-Client-Id": "abdsZ4P4wfWxfwWwluf7",
-          "X-Naver-Client-Secret": "emn1T4Bw4Z",
+          "X-Naver-Client-Id": "1HTYG_ypRx5SzoEt45Mm",
+          "X-Naver-Client-Secret": "UtJgCIdY6G",
         },
       })
       .then((res) => res.data)
@@ -39,6 +39,14 @@ export class TranslationService {
         }),
       })
       .parse(data);
+
+    await prisma.translation.create({
+      data: {
+        en,
+        ko: translatedText,
+        requestedFrom,
+      },
+    });
 
     return translatedText;
   }
