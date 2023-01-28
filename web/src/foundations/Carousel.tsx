@@ -185,7 +185,7 @@ function Carousel({ fullWidth, fullHeight, items, emitCurrentIndex }: Props) {
           color: black;
           cursor: pointer;
           user-select: none;
-          margin: 0 2rem;
+          margin: 0 6rem;
         }
         .carousel {
           position: relative;
@@ -195,7 +195,7 @@ function Carousel({ fullWidth, fullHeight, items, emitCurrentIndex }: Props) {
           width: ${fullWidth}px;
           height: ${fullWidth}px;
           overflow-x: hidden;
-          margin: -180px;
+          margin: -160px 0 -200px;
         }
         .item {
           position: absolute;

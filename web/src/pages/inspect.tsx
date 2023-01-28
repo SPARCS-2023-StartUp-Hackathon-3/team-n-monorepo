@@ -83,9 +83,9 @@ const Inspect: NextPage = () => {
             />
           </div>
 
-          <div className="question">
+          <div className="guide">
             <p>
-              직접 보지 않고 글만 읽어도 어떤 상품인지 알 수 있을 것 같다면
+              이미지를 보지 않고 글만 읽어도 어떤 상품인지 알 수 있을 것 같다면
               옷장에 담아주세요.
               <br></br>혹시 방금 본 아이템들 중 설명이 부적절한 대체텍스트는
               없었나요?
@@ -97,7 +97,7 @@ const Inspect: NextPage = () => {
               {questions && (
                 <Carousel
                   fullWidth={750}
-                  fullHeight={334}
+                  fullHeight={400}
                   items={new Array(9).fill(null).map((_, i) => {
                     const question = questions[i % questions.length];
                     return (
@@ -136,7 +136,9 @@ const Inspect: NextPage = () => {
                   pointerEvents: inspected ? "none" : "auto",
                 }}
               />
-              <button onClick={submit}>옷장에 집어넣기</button>
+              <button onClick={submit} disabled={inspected}>
+                옷장에 집어넣기
+              </button>
             </div>
           </div>
           <div className="nextWrapper">
@@ -151,7 +153,6 @@ const Inspect: NextPage = () => {
           position: relative;
           justify-content: center;
           display: flex;
-          justify-content: center;
           align-items: center;
           flex-direction: column;
 
@@ -163,12 +164,11 @@ const Inspect: NextPage = () => {
           text-align: center;
         }
         .bottomWrapper {
-          display: inline-block;
           width: 100%;
           display: flex;
           justify-content: center;
           align-items: center;
-          margin: auto:
+          margin: auto;
         }
         .image {
           width: 100%;
@@ -190,7 +190,7 @@ const Inspect: NextPage = () => {
           background: rgba(255, 255, 255, 0.8);
           border: 1px solid #000000;
           border-radius: 10px;
-          color: #7d7d7d;
+          color: #222222;
           text-align: center;
 
           display: flex;
@@ -202,13 +202,15 @@ const Inspect: NextPage = () => {
           resize: none;
         }
         .imgAlign {
+          margin-top: 16px;
           display: flex;
           justify-content: center;
           mix-blend-mode: difference;
         }
-        .question {
+        .guide {
           text-align: center;
           color: #000000;
+          margin: 8px 0 32px;
         }
         button {
           -webkit-appearance: none;
@@ -220,7 +222,7 @@ const Inspect: NextPage = () => {
           line-height: 36px;
 
           background: #000000;
-          color: #FFFFFF;
+          color: #ffffff;
           padding: 25px 105px;
           display: inline-block;
           width: auto;
@@ -232,10 +234,10 @@ const Inspect: NextPage = () => {
 
           z-index: 1000;
         }
-        .nextWrapper{
+        .nextWrapper {
           display: flex;
           justify-content: center;
-          width: 100%
+          width: 100%;
           margin: auto;
         }
         .nextButton {
