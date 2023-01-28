@@ -25,7 +25,7 @@ const Mock: NextPage = () => {
       </main>
       <style jsx>{`
         .container {
-          color: red;
+          color: green;
         }
       `}</style>
     </>
