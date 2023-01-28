@@ -155,4 +155,37 @@ export const questionRouter = createTRPCRouter({
 
       return result;
     }),
+
+  addOption: publicProcedure
+    .input(
+      z.object({
+        userUuid: z.string().uuid(),
+        questionId: z.number(),
+        text: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input: { userUuid, questionId, text } }) => {
+      const question = await ctx.prisma.question.findFirst({
+        where: {
+          id: questionId,
+        },
+      });
+      if (!question) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Invalid question",
+        });
+      }
+
+      const result = await ctx.prisma.option.create({
+        data: {
+          text,
+          sourceType: "user",
+          sourceId: userUuid,
+          questionId,
+        },
+      });
+
+      return result;
+    }),
 });
