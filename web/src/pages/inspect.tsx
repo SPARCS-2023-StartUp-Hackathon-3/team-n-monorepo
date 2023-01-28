@@ -2,8 +2,13 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Carousel from "../foundations/Carousel";
 import Link from "next/link";
+import useSWR from "swr";
+import { QUESTIONS_KEY } from "./questions";
 
 const Inspect: NextPage = () => {
+  const { data: questions } = useSWR(QUESTIONS_KEY);
+  console.log(questions);
+
   return (
     <>
       <Head>

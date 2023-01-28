@@ -6,17 +6,23 @@ import useAuth from "../hooks/useAuth";
 import { api } from "../utils/api";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { mutate } from "swr";
+import { inferRouterOutputs } from "@trpc/server";
+import { type AppRouter } from "../server/api/root";
+import { useRouter } from "next/router";
 
+export type Option =
+  inferRouterOutputs<AppRouter>["question"]["randomQuestion"]["options"][0];
 export interface AnsweredQuestion {
   id: number;
   url: string;
-  answer: string;
+  correctAnswer: string;
 }
 export const QUESTIONS_KEY = "/answeredQuestions";
 
 const Questions: NextPage = () => {
+  const router = useRouter();
   const { uuid, nickname } = useAuth();
-
   // 문제
   const { data: question, refetch } = api.question.randomQuestion.useQuery(
     { userUuid: uuid ?? "" },
@@ -24,29 +30,64 @@ const Questions: NextPage = () => {
       refetchOnWindowFocus: false,
     }
   );
-  const sum =
-    question?.options?.reduce((prev, option) => prev + option.submitCount, 1) ??
-    1;
+  const options = question?.options ?? [];
+  const countOfCorrectAnswer = Math.max(
+    ...options.map((option) => option.submitCount)
+  );
+  const correctAnswer = options.find(
+    (option) => option.submitCount === countOfCorrectAnswer
+  );
+
+  const sum = options.reduce((prev, option) => prev + option.submitCount, 1);
 
   // 출제자가 고른 정답
-  const [answerId, setAnswerId] = useState<null | number>(null);
+  const [answer, setAnswer] = useState<Option | null>(null);
 
   // 제출
   const mutation = api.question.submitAnswer.useMutation();
   useEffect(() => {
-    if (question && answerId) {
+    if (question && answer && correctAnswer) {
+      // api 호출
       mutation.mutate({
         questionId: question.id,
-        optionId: answerId,
+        optionId: answer.id,
         userUuid: uuid!,
       });
-      setTimeout(() => {
-        void refetch().then(() => {
-          setAnswerId(null);
-        });
-      }, 3000);
+      if (countOfCorrectAnswer === answer.submitCount) {
+        // 정답
+        void mutate<AnsweredQuestion[]>(QUESTIONS_KEY, (state) => [
+          ...(state ?? []),
+          {
+            id: question.id,
+            url: question.url,
+            correctAnswer: answer.text,
+          },
+        ]);
+        setTimeout(() => {
+          setAnswer(null);
+          void refetch();
+        }, 3000);
+      } else {
+        // 오답
+        void mutate<AnsweredQuestion[]>(QUESTIONS_KEY, (state) => [
+          ...(state ?? []),
+          {
+            id: question.id,
+            url: question.url,
+            correctAnswer: correctAnswer.text,
+          },
+        ]);
+        setTimeout(() => {
+          void router.push("/inspect");
+        }, 3000);
+      }
     }
-  }, [question, answerId]);
+  }, [question, answer, correctAnswer]);
+
+  // 초기화
+  useEffect(() => {
+    void mutate(QUESTIONS_KEY, []);
+  }, []);
 
   return (
     <>
@@ -81,11 +122,11 @@ const Questions: NextPage = () => {
               height={280}
               style={{ objectFit: "contain" }}
             />
-            {question.options.map((option, index) => (
+            {options.map((option, index) => (
               <div
                 className="box"
                 key={option.id}
-                onClick={() => setAnswerId(option.id)}
+                onClick={() => setAnswer(option)}
               >
                 <span className="text">{option.text}</span>
                 <span className="number">{index + 1}</span>
@@ -93,9 +134,9 @@ const Questions: NextPage = () => {
                   className="percent"
                   style={{
                     transform: `scaleX(${
-                      answerId
+                      answer
                         ? (option.submitCount +
-                            (answerId === option.id ? 1 : 0)) /
+                            (answer.id === option.id ? 1 : 0)) /
                           sum
                         : 0
                     })`,
