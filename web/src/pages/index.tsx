@@ -88,7 +88,7 @@ const Home: NextPage = () => {
 
           <div className="middle">
             <div className="ranking">
-              <ul>
+              <ul style={{minHeight: "144px"}}>
                 {ranking?.slice(0, 4).map((user) => (
                   <li key={user.userUuid}>
                     <span style={{ display: "inline-block", minWidth: 32 }}>
