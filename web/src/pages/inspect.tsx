@@ -47,7 +47,7 @@ const Inspect: NextPage = () => {
       });
       setInspectedQuestions((state) => [...state, currentQuestion]);
       setMessage(
-        `${inspectedQuestions.length + 1} / ${questions?.length} 검수 완료`
+        `${inspectedQuestions.length + 1} / ${questions?.length ?? 0} 검수 완료`
       );
     }
   };
