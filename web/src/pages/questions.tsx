@@ -21,7 +21,7 @@ export interface AnsweredQuestion {
 export const QUESTIONS_KEY = "/answeredQuestions";
 
 const Questions: NextPage = () => {
-  const { data: answeredQuestions } = useSWR(QUESTIONS_KEY);
+  const { data: answeredQuestions } = useSWR<AnsweredQuestion[]>(QUESTIONS_KEY);
   const router = useRouter();
   const { uuid, nickname } = useAuth();
   // 문제
@@ -107,7 +107,7 @@ const Questions: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className="area" >
+        <div className="area">
           <ul className="circles">
             <li></li>
             <li></li>
@@ -126,8 +126,10 @@ const Questions: NextPage = () => {
           <div className="question">
             <p>
               {nickname}님, 반갑습니다!
-              <br></br>쇼핑몰에서 이미지를 볼 수 없는 분들께 제가 아래 이미지를 설명하려고 해요.
-              <br></br>어떤 설명이 제일 괜찮나요? 사람들이 가장 많이 고른 선택지를 맞춰주세요!
+              <br></br>쇼핑몰에서 이미지를 볼 수 없는 분들께 제가 아래 이미지를
+              설명하려고 해요.
+              <br></br>어떤 설명이 제일 괜찮나요? 사람들이 가장 많이 고른
+              선택지를 맞춰주세요!
             </p>
           </div>
 
@@ -135,14 +137,14 @@ const Questions: NextPage = () => {
             <>
               <div className="imgBox">
                 <img
-                src={question.url}
-                alt="secret"
-                width={470}
-                height={280}
-                style={{ objectFit: "contain" }}
-              />
+                  src={question.url}
+                  alt="secret"
+                  width={470}
+                  height={280}
+                  style={{ objectFit: "contain" }}
+                />
               </div>
-              
+
               {options.map((option, index) => (
                 <div
                   className="box"
@@ -167,8 +169,6 @@ const Questions: NextPage = () => {
               ))}
             </>
           )}
-        
-      
         </div>
       </main>
       <style jsx>{`
