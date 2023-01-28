@@ -127,7 +127,7 @@ const Questions: NextPage = () => {
             />
           </div>
 
-          <div className="question">
+          <div className="guide">
             {isWrong ? (
               <p>{nickname}님, 다른 사람들은 아무래도 보는 눈이 다른가 봐요!</p>
             ) : answeredQuestions?.length === 0 ? (
@@ -158,7 +158,7 @@ const Questions: NextPage = () => {
           </div>
 
           {question && (
-            <>
+            <div className="question">
               <div className="imgBox">
                 <img
                   src={question.url}
@@ -169,50 +169,59 @@ const Questions: NextPage = () => {
                 />
               </div>
 
-              {options.map((option, index) => (
-                <div
-                  className="box"
-                  key={option.id}
-                  onClick={() => {
-                    if (!answer) {
-                      setAnswer(option);
-                    }
-                  }}
-                >
-                  <span className="text">{option.text}</span>
-                  <span className="number">{index + 1}</span>
-                  <span
-                    className="percent"
-                    style={{
-                      transform: `scaleX(${
-                        answer
-                          ? (option.submitCount +
-                              (answer.id === option.id ? 1 : 0)) /
-                            sum
-                          : 0
-                      })`,
+              <ol>
+                {options.map((option, index) => (
+                  <li
+                    className="box"
+                    key={option.id}
+                    onClick={() => {
+                      if (!answer) {
+                        setAnswer(option);
+                      }
                     }}
-                  />
-                </div>
-              ))}
-            </>
+                  >
+                    <span className="text">{option.text}</span>
+                    <span className="number">{index + 1}</span>
+                    <span
+                      className="percent"
+                      style={{
+                        transform: `scaleX(${
+                          answer
+                            ? (option.submitCount +
+                                (answer.id === option.id ? 1 : 0)) /
+                              sum
+                            : 0
+                        })`,
+                      }}
+                    />
+                  </li>
+                ))}
+              </ol>
+            </div>
           )}
         </div>
       </main>
       <style jsx>{`
-        .imgBox {
-          position: absolute;
-          left: 100px;
-          top: 326px;
+        main {
+          padding-top: 64px;
+        }
+        .guide {
+          text-align: center;
+          color: #000000;
+        }
+        .question {
+          margin-top: 32px;
+          display: flex;
+          gap: 20px;
+          justify-content: center;
+          align-items: flex-start;
         }
         .box {
           position: relative;
-          right: -625px;
-          top: 10px;
           width: 630px;
           min-height: 90px;
           padding: 36px;
-          margin: 20px;
+          margin-bottom: 20px;
 
           background: #ffffff;
           border: 1px solid #000000;
@@ -254,10 +263,6 @@ const Questions: NextPage = () => {
           display: flex;
           justify-content: center;
           mix-blend-mode: difference;
-        }
-        .question {
-          text-align: center;
-          color: #000000;
         }
       `}</style>
     </>
