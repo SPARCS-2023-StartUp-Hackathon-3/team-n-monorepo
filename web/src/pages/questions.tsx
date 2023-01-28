@@ -4,7 +4,15 @@ import Head from "next/head";
 import Image from "next/image";
 import useAuth from "../hooks/useAuth";
 import { api } from "../utils/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useSWR from "swr";
+
+export interface AnsweredQuestion {
+  id: number;
+  url: string;
+  answer: string;
+}
+export const QUESTIONS_KEY = "/answeredQuestions";
 
 const Questions: NextPage = () => {
   const { uuid } = useAuth();
@@ -15,10 +23,22 @@ const Questions: NextPage = () => {
     }
   );
 
-  const [answer, setAnswer] = useState<null | number>(null);
+  const [answerId, setAnswerId] = useState<null | number>(null);
   const sum =
-    question?.options?.reduce((prev, option) => prev + option.submitCount, 0) ??
-    0;
+    question?.options?.reduce((prev, option) => prev + option.submitCount, 1) ??
+    1;
+
+  // 제출
+  const mutation = api.question.submitAnswer.useMutation();
+  useEffect(() => {
+    if (question && answerId) {
+      mutation.mutate({
+        questionId: question.id,
+        optionId: answerId,
+        userUuid: uuid!,
+      });
+    }
+  }, [question, answerId]);
 
   return (
     <>
@@ -55,7 +75,7 @@ const Questions: NextPage = () => {
               <div
                 className="box"
                 key={option.id}
-                onClick={() => setAnswer(option.id)}
+                onClick={() => setAnswerId(option.id)}
               >
                 <span className="text">{option.text}</span>
                 <span className="number">{index + 1}</span>
@@ -63,7 +83,11 @@ const Questions: NextPage = () => {
                   className="percent"
                   style={{
                     transform: `scaleX(${
-                      answer ? option.submitCount / sum : 0
+                      answerId
+                        ? (option.submitCount +
+                            (answerId === option.id ? 1 : 0)) /
+                          sum
+                        : 0
                     })`,
                   }}
                 />
