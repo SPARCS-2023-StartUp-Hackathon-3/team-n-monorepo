@@ -16,7 +16,16 @@ export class TranslationService {
           "X-Naver-Client-Secret": "emn1T4Bw4Z",
         },
       })
-      .then((res) => res.data);
+      .then((res) => res.data)
+      .catch((e) => {
+        console.error(e);
+        return null;
+      });
+
+    if (!data) {
+      return en;
+    }
+
     const {
       message: {
         result: { translatedText },
