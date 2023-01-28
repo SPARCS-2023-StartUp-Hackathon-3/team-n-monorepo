@@ -67,7 +67,7 @@ const Home: NextPage = () => {
             <div className="ranking">
               <ul>
                 {ranking?.slice(0, 4).map((user) => (
-                  <li>
+                  <li key={user.userUuid}>
                     {user.rank}등 {user.nickname} {user.score}벌
                   </li>
                 ))}
