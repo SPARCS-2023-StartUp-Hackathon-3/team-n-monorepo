@@ -3,10 +3,10 @@ import Head from "next/head";
 import Carousel from "../foundations/Carousel";
 import Link from "next/link";
 import useSWR from "swr";
-import { QUESTIONS_KEY } from "./questions";
+import { type AnsweredQuestion, QUESTIONS_KEY } from "./questions";
 
 const Inspect: NextPage = () => {
-  const { data: questions } = useSWR(QUESTIONS_KEY);
+  const { data: questions } = useSWR<AnsweredQuestion[]>(QUESTIONS_KEY);
   console.log(questions);
 
   return (
@@ -23,18 +23,29 @@ const Inspect: NextPage = () => {
           대체텍스트는 엔터를 눌러 옷장에 넣을 수 있어요.
         </p>
         <div className="carouselWrapper">
-          <Carousel
-            fullWidth={1000}
-            fullHeight={650}
-            items={new Array(9).fill(null).map((_, i) => (
-              <div className="mock" key={i}>
-                Hello
-              </div>
-            ))}
-            emitCurrentIndex={(index) => {
-              console.log(index);
-            }}
-          />
+          {questions && (
+            <Carousel
+              fullWidth={833}
+              fullHeight={650}
+              items={new Array(9).fill(null).map((_, i) => {
+                const option = questions[i % questions.length];
+                return (
+                  <div className="mock" key={i}>
+                    <img
+                      className="image"
+                      src={option?.url || ""}
+                      alt={option?.correctAnswer || ""}
+                      width={500}
+                      height={500}
+                    />
+                  </div>
+                );
+              })}
+              emitCurrentIndex={(index) => {
+                console.log(index);
+              }}
+            />
+          )}
         </div>
       </main>
       <style jsx>{`
@@ -53,6 +64,15 @@ const Inspect: NextPage = () => {
           width: 500px;
           height: 500px;
           background: black;
+          border-radius: 10px;
+        }
+        .image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          user-select: none;
+          -webkit-user-drag: none;
+          border-radius: 10px;
         }
       `}</style>
     </>

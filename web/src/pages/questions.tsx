@@ -115,10 +115,9 @@ const Questions: NextPage = () => {
 
         {question && (
           <>
-            <Image
-              priority
+            <img
               src={question.url}
-              alt="MOCK"
+              alt="secret"
               width={320}
               height={280}
               style={{ objectFit: "contain" }}
