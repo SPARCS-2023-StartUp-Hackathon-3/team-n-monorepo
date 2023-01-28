@@ -55,9 +55,19 @@ model Submission {
     userUuid   String
     question   Question @relation(fields: [questionId], references: [id])
     option     Option   @relation(fields: [optionId], references: [id])
+    user       User     @relation(fields: [userUuid], references: [uuid])
 
     @@index([questionId])
     @@index([optionId])
+    @@index([userUuid])
+}
+
+model User {
+    uuid            String       @id @unique
+    createdAt       DateTime     @default(now())
+    nickname        String
+    submissionCount Int          @default(0)
+    submissions     Submission[]
 }
 
 // Necessary for Next auth
