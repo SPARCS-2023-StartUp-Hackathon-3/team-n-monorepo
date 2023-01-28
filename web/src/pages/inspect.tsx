@@ -219,6 +219,8 @@ const Inspect: NextPage = () => {
           cursor: pointer;
           transition: 0.5s;
           margin: 100px;
+
+          z-index: 1000;
         }
       `}</style>
     </>
