@@ -1,14 +1,10 @@
-import { PrismaClient } from "@prisma/client";
 import axios from "axios";
 import { z } from "zod";
-
-const prisma = new PrismaClient({
-  log: ["query", "info", "warn", "error"],
-});
+import { prisma } from "../db";
 
 export class InferenceService {
   private instance = axios.create({
-    baseURL: "http://127.0.0.1:8000",
+    baseURL: "http://noon.hackathon.sparcs.org",
   });
 
   async getFromCacheOrPython(
