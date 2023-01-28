@@ -20,11 +20,23 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex flex-col items-center justify-center">
+        <Image
+          priority
+          src="/logo.png"
+          alt="NooN 로고"
+          width={225}
+          height={70}
+        />
+        <p>
+          모두에게 이로운 <br /> 대한민국 웹접근성 개선 프로젝트
+        </p>
         <p>
           게임을 플레이하면 할수록 <br />
-          시각장애인을 위해 이미지를 읽어주는 <br />눈 인공지능이 똑똑해져요
+          시각장애인을 위해 이미지를 읽어주는
+          <br />눈 Noon 인공지능이 똑똑해져요
         </p>
-        <p>오늘까지 쌓인 눈송이 총 000개</p>
+        <p>더 많은 사람들이 선택한 대체텍스트*를 찾아 보세요!</p>
+        <p>누적 점수 총 000점</p>
         <p>000명이 참여하고 있어요.</p>
         <form
           onSubmit={(e) => {
@@ -42,23 +54,10 @@ const Home: NextPage = () => {
               setNickname(e.target.value);
             }}
           />
-          <ul>
-            <li>1등 닉네임 00개</li>
-            <li>2등 닉네임 00개</li>
-            <li>3등 닉네임 00개</li>
-          </ul>
-          <button>플레이 하러 가기</button>
+          <button>시작하기</button>
         </form>
+        <a href="">NooN 확장 프로그램 써 보러 가기</a>
       </main>
-      <footer>
-        <Image
-          priority
-          src="/logo.png"
-          alt="NooN 로고"
-          width={327}
-          height={93}
-        />
-      </footer>
     </>
   );
 };
