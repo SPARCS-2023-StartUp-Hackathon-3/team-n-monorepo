@@ -123,22 +123,27 @@ const Questions: NextPage = () => {
               height={168}
             />
           </div>
-          <p>
-            {nickname}님, 반갑습니다! 온라인 쇼핑몰에서 이미지를 볼 수 없는 분들을
-            위해 왼쪽 사진의 아이템을 제가 대신 설명하려고 해요. 사람들이 가장
-            많이 고른 선택지를 맞춰 주세요!
-          </p>
-          <p>000점</p>
+
+          <div className="question">
+            <p>
+              {nickname}님, 반갑습니다!
+              <br></br>쇼핑몰에서 이미지를 볼 수 없는 분들께 제가 아래 이미지를 설명하려고 해요.
+              <br></br>어떤 설명이 제일 괜찮나요? 사람들이 가장 많이 고른 선택지를 맞춰주세요!
+            </p>
+          </div>
 
           {question && (
             <>
-              <img
+              <div className="imgBox">
+                <img
                 src={question.url}
                 alt="secret"
-                width={320}
+                width={470}
                 height={280}
                 style={{ objectFit: "contain" }}
               />
+              </div>
+              
               {options.map((option, index) => (
                 <div
                   className="box"
@@ -164,14 +169,23 @@ const Questions: NextPage = () => {
             </>
           )}
         
+      
         </div>
       </main>
       <style jsx>{`
+        .imgBox {
+          position: relative;
+          left: 100px;
+          top: 30px;
+        }
         .box {
           position: relative;
-          max-width: 340px;
-          min-height: 50px;
-          padding: 20px;
+          left: 600px;
+          bottom: 300px;
+          width: 630px;
+          min-height: 90px;
+          padding: 36px;
+          margin: 20px;
 
           background: #ffffff;
           border: 1px solid #000000;
@@ -210,9 +224,14 @@ const Questions: NextPage = () => {
           transform-origin: left;
         }
         .imgAlign {
-            justify-content: center;
-            mix-blend-mode: difference;
-          }
+          display: flex;
+          justify-content: center;
+          mix-blend-mode: difference;
+        }
+        .question {
+          text-align: center;
+          color: #000000;
+        }
       `}</style>
     </>
   );
