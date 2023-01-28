@@ -114,25 +114,26 @@ const Home: NextPage = () => {
               />
             </div>
             <p className="p1">패션을 들려주는 새로운 눈</p>
-            
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleSubmit();
-              }}
-            >
-              <input
-                id="nickname"
-                name="nickname"
-                placeholder="닉네임을 입력하세요"
-                value={nickname}
-                onChange={(e) => {
-                  setNickname(e.target.value);
+          </div>
+          <div className="bottom">
+            <form 
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSubmit();
                 }}
-              />
-              <p className="p2">더 많은 사람들이 선택한 대체텍스트*를 찾아 보세요!</p>
-              <button>시작하기</button>
+              >
+                <input
+                  id="nickname"
+                  name="nickname"
+                  placeholder="닉네임을 입력하세요"
+                  value={nickname}
+                  onChange={(e) => {
+                    setNickname(e.target.value);
+                  }}
+                />
             </form>
+            <p className="p2">더 많은 사람들이 선택한 대체텍스트를 찾아 보세요!</p>
+            <button>시작하기</button>
           </div>
           <div className="toExtension">
             <a href="www.google.com">NooN 확장 프로그램 써 보러 가기</a>
@@ -204,8 +205,8 @@ const Home: NextPage = () => {
             font-size: 30px;
             line-height: 38px;
 
-            background: #FFFFFF;
-            color: #000000;
+            background: #000000;
+            color: #FFFFFF;
             padding: 25px 140px;
             display: inline-block;
             width: auto;
@@ -213,6 +214,20 @@ const Home: NextPage = () => {
             border-radius: 10px;
             cursor: pointer;
             transition: 0.5s;
+          }
+          .bottom {
+            color: black;
+            justify-content: center;
+            text-align: center;
+          }
+          input {
+            font-weight: 300;
+            font-size: 20px;
+            line-height: 24px;
+            background: transparent;
+            border-bottom: 1px solid;
+            text-align: center;
+            color: #000000;
           }
 
           /** background css */
