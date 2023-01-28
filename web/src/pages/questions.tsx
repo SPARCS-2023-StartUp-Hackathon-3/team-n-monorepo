@@ -117,44 +117,49 @@ const Questions: NextPage = () => {
             <li></li>
             <li></li>
           </ul>
-          <div className="imgAlign">
-            <Image
-              priority
-              src="/logo_questions.png"
-              alt="NooN logo"
-              width={237}
-              height={168}
-            />
-          </div>
 
-          <div className="guide">
-            {isWrong ? (
-              <p>{nickname}님, 다른 사람들은 아무래도 보는 눈이 다른가 봐요!</p>
-            ) : answeredQuestions?.length === 0 ? (
-              <p>
-                {nickname}님, 반갑습니다!
-                <br></br>쇼핑몰에서 이미지를 볼 수 없는 분들께 제가 아래
-                이미지를 설명하려고 해요.
-                <br></br>어떤 설명이 제일 괜찮나요? 사람들이 가장 많이 고른
-                선택지를 맞혀주세요!
-              </p>
-            ) : (
-              <p>
-                {nickname}님, 고마워요! 다른 아이템도 한 번 살펴볼까요?
-                <br></br>
-                {answeredQuestions && answeredQuestions.length % 2 === 0 ? (
-                  <>
-                    어떤 설명이 제일 괜찮나요? 사람들이 가장 많이 고른 선택지를
-                    맞혀주세요!
-                  </>
-                ) : (
-                  <>
-                    쇼핑몰에서 이미지를 볼 수 없는 분들께 제가 아래 이미지를
-                    설명하려고 해요.
-                  </>
-                )}
-              </p>
-            )}
+          <div className="header">
+            <div className="imgAlign">
+              <Image
+                priority
+                src="/logo_questions.png"
+                alt="NooN logo"
+                width={237}
+                height={168}
+              />
+            </div>
+
+            <div className="guide">
+              {isWrong ? (
+                <p>
+                  {nickname}님, 다른 사람들은 아무래도 보는 눈이 다른가 봐요!
+                </p>
+              ) : answeredQuestions?.length === 0 ? (
+                <p>
+                  {nickname}님, 반갑습니다!
+                  <br></br>쇼핑몰에서 이미지를 볼 수 없는 분들께 제가 아래
+                  이미지를 설명하려고 해요.
+                  <br></br>어떤 설명이 제일 괜찮나요? 사람들이 가장 많이 고른
+                  선택지를 맞혀주세요!
+                </p>
+              ) : (
+                <p>
+                  {nickname}님, 고마워요! 다른 아이템도 한 번 살펴볼까요?
+                  <br></br>
+                  {answeredQuestions && answeredQuestions.length % 2 === 0 ? (
+                    <>
+                      어떤 설명이 제일 괜찮나요? 사람들이 가장 많이 고른
+                      선택지를 맞혀주세요!
+                    </>
+                  ) : (
+                    <>
+                      쇼핑몰에서 이미지를 볼 수 없는 분들께 제가 아래 이미지를
+                      설명하려고 해요.
+                    </>
+                  )}
+                </p>
+              )}
+            </div>
           </div>
 
           {question && (
@@ -205,9 +210,16 @@ const Questions: NextPage = () => {
         main {
           padding-top: 64px;
         }
+        .header {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 64px;
+        }
         .guide {
-          text-align: center;
+          text-align: left;
           color: #000000;
+          font-size: 20px;
         }
         .question {
           margin-top: 32px;

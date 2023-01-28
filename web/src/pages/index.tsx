@@ -91,9 +91,20 @@ const Home: NextPage = () => {
               <ul>
                 {ranking?.slice(0, 4).map((user) => (
                   <li key={user.userUuid}>
-                    {user.rank}등 {user.nickname} {user.score}벌
+                    <span style={{ display: "inline-block", minWidth: 32 }}>
+                      {user.rank}등
+                    </span>
+                    <span style={{ display: "inline-block", minWidth: 140 }}>
+                      {user.nickname}
+                    </span>
+                    <span style={{ display: "inline-block", minWidth: 32 }}>
+                      {user.score}벌
+                    </span>
                   </li>
                 ))}
+                <li>
+                  <span>&#8942;</span>
+                </li>
               </ul>
             </div>
             <div className="impact">
@@ -127,19 +138,19 @@ const Home: NextPage = () => {
                 handleSubmit();
               }}
             >
-            <input
-              id="nickname"
-              name="nickname"
-              placeholder="닉네임을 입력하세요"
-              value={nickname}
-              onChange={(e) => {
-                setNickname(e.target.value);
-              }}
-            />
-            <p className="p2">
-              더 많은 사람들이 선택한 대체텍스트를 찾아 보세요!
-            </p>
-            <button>시작하기</button>
+              <input
+                id="nickname"
+                name="nickname"
+                placeholder="닉네임을 입력하세요"
+                value={nickname}
+                onChange={(e) => {
+                  setNickname(e.target.value);
+                }}
+              />
+              <p className="p2">
+                더 많은 사람들이 선택한 대체텍스트를 찾아 보세요!
+              </p>
+              <button>시작하기</button>
             </form>
           </div>
         </div>
@@ -153,7 +164,7 @@ const Home: NextPage = () => {
           }
           .area {
             min-height: 95vh;
-            padding-top: 100px;
+            padding-top: 80px;
           }
           .middle {
             text-align: center;
@@ -162,7 +173,8 @@ const Home: NextPage = () => {
             will-change: opacity;
           }
           .ranking {
-            margin-bottom: 50px;
+            margin-bottom: 32px;
+            line-height: 1.8;
           }
           .impact {
             font-weight: 600;
@@ -188,7 +200,7 @@ const Home: NextPage = () => {
           }
           .p2 {
             font-weight: 300;
-            font-size: 15px;
+            font-size: 16px;
             line-height: 18px;
             margin: 32px 16px 16px;
           }
@@ -224,6 +236,10 @@ const Home: NextPage = () => {
             border-bottom: 1px solid;
             text-align: center;
             color: #000000;
+          }
+          input::placeholder {
+            color: #ffffff;
+            mix-blend-mode: difference;
           }
 
           /** background css */
