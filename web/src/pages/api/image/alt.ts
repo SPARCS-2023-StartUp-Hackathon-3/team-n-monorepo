@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import NextCors from "nextjs-cors";
 import { z } from "zod";
 import { InferenceService } from "../../../server/util/InferenceService";
@@ -34,7 +34,7 @@ export default async function handler(
     return;
   }
 
-  const result = await new InferenceService().getFromCacheOrPython(urls);
+  const result = await new InferenceService().getAlt(urls);
 
   const translationService = new TranslationService();
   const response = await Promise.all(
