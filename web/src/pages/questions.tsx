@@ -42,7 +42,7 @@ const Questions: NextPage = () => {
 
   const sum = options.reduce((prev, option) => prev + option.submitCount, 1);
 
-  // 출제자가 고른 정답
+  // 내가 고른 정답
   const [answer, setAnswer] = useState<Option | null>(null);
 
   // 제출
@@ -118,49 +118,49 @@ const Questions: NextPage = () => {
             <li></li>
           </ul>
 
-          <div className="header">
-            <div className="imgAlign">
-              <Image
-                priority
-                src="/logo_questions.png"
-                alt="NooN logo"
-                width={237}
-                height={168}
-              />
-            </div>
 
-            <div className="guide">
-              {isWrong ? (
-                <p>
-                  {nickname}님, 다른 사람들은 아무래도 보는 눈이 다른가 봐요!
-                </p>
-              ) : answeredQuestions?.length === 0 ? (
-                <p>
-                  {nickname}님, 반갑습니다!
-                  <br></br>쇼핑몰에서 이미지를 볼 수 없는 분들께 제가 아래
-                  이미지를 설명하려고 해요.
-                  <br></br>어떤 설명이 제일 괜찮나요? 사람들이 가장 많이 고른
-                  선택지를 맞혀주세요!
-                </p>
-              ) : (
-                <p>
-                  {nickname}님, 고마워요! 다른 아이템도 한 번 살펴볼까요?
-                  <br></br>
-                  {answeredQuestions && answeredQuestions.length % 2 === 0 ? (
-                    <>
-                      어떤 설명이 제일 괜찮나요? 사람들이 가장 많이 고른
-                      선택지를 맞혀주세요!
-                    </>
-                  ) : (
-                    <>
-                      쇼핑몰에서 이미지를 볼 수 없는 분들께 제가 아래 이미지를
-                      설명하려고 해요.
-                    </>
-                  )}
-                </p>
-              )}
-            </div>
+          <div className="imgAlign">
+            <Image
+              priority
+              src="/logo_questions.png"
+              alt="NooN logo"
+              width={237}
+              height={168}
+            />
           </div>
+
+          <div className="guide">
+            {isWrong ? (
+              <p>
+                {nickname}님, 다른 사람들은 아무래도 보는 눈이 다른가 봐요!
+              </p>
+            ) : answeredQuestions?.length === 0 ? (
+              <p>
+                {nickname}님, 반갑습니다!
+                <br></br>쇼핑몰에서 이미지를 볼 수 없는 분들께 제가 아래
+                이미지를 설명하려고 해요.
+                <br></br>어떤 설명이 제일 괜찮나요? 사람들이 가장 많이 고른
+                선택지를 맞혀주세요!
+              </p>
+            ) : (
+              <p>
+                {nickname}님, 고마워요! 다른 아이템도 한 번 살펴볼까요?
+                <br></br>
+                {answeredQuestions && answeredQuestions.length % 2 === 0 ? (
+                  <>
+                    어떤 설명이 제일 괜찮나요? 사람들이 가장 많이 고른
+                    선택지를 맞혀주세요!
+                  </>
+                ) : (
+                  <>
+                    쇼핑몰에서 이미지를 볼 수 없는 분들께 제가 아래 이미지를
+                    설명하려고 해요.
+                  </>
+                )}
+              </p>
+            )}
+          </div>
+          
 
           {question && (
             <div className="question">
@@ -186,7 +186,8 @@ const Questions: NextPage = () => {
                     }}
                   >
                     <span className="text">{option.text}</span>
-                    <span className="number">{index + 1}</span>
+                    {answer?.id !== option.id && <span className="number">{index + 1}</span>}
+                    {answer?.id === option.id && <span className="answerNum">{index + 1}</span>}
                     <span
                       className="percent"
                       style={{
@@ -208,7 +209,7 @@ const Questions: NextPage = () => {
       </main>
       <style jsx>{`
         main {
-          padding-top: 64px;
+          padding-top: 44px;
         }
         .header {
           display: flex;
@@ -217,7 +218,7 @@ const Questions: NextPage = () => {
           gap: 64px;
         }
         .guide {
-          text-align: left;
+          text-align: center;
           color: #000000;
           font-size: 20px;
         }
@@ -239,25 +240,61 @@ const Questions: NextPage = () => {
           border: 1px solid #000000;
           border-radius: 10px;
         }
+        .box:hover {
+          position: relative;
+          width: 630px;
+          min-height: 90px;
+          padding: 36px;
+          margin-bottom: 20px;
+
+          font-weight: 700;
+
+          background: #ffffff;
+          border: 2px solid #000000;
+          border-radius: 10px;
+        }
         .text {
           position: relative;
+          left: 80px;
           color: white;
           mix-blend-mode: difference;
           z-index: 1;
         }
         .number {
           position: absolute;
-          top: 0;
-          left: 0;
-          width: 19px;
-          height: 22px;
-          border-radius: 8.5px 0 6px;
+          top: 50%;
+          transform: translateY(-50%);
+          left: 32px;
+          width: 30px;
+          height: 30px;
           z-index: 1;
+          text-align: center;
 
-          color: black;
+          font-weight: 900;
+          font-size: 30px;
+          line-height: 36px;
+          
+          
+          color: white;
           mix-blend-mode: difference;
+        }
+        .answerNum {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          left: 24px;
+          width: 46px;
+          height: 46px;
+          z-index: 1;
+          text-align: center;
+          border-radius: 23px;
+          line-height: 170%;
+
+          font-weight: 900;
+          font-size: 30px;
+
           background: white;
-          background-blend-mode: difference;
+          mix-blend-mode: difference;
         }
         .percent {
           position: absolute;
