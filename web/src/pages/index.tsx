@@ -52,7 +52,7 @@ const Home: NextPage = () => {
         <Image
           priority
           src="/logo.png"
-          alt="NOON logo"
+          alt="NooN 로고"
           width={327}
           height={93}
         />
