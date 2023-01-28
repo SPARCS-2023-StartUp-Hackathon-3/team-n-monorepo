@@ -1,12 +1,12 @@
 import axios from "axios";
 import { z } from "zod";
-
+import { prisma } from "../db";
 export class TranslationService {
   private instance = axios.create({
     baseURL: "https://openapi.naver.com",
   });
 
-  async enToKr(en: string): Promise<string> {
+  async enToKr(en: string, requestedFrom: string): Promise<string> {
     console.log("enToKr", en);
     const data = await this.instance
       .post<unknown>("/v1/papago/n2mt", `source=en&target=ko&text=${en}`, {
@@ -39,6 +39,14 @@ export class TranslationService {
         }),
       })
       .parse(data);
+
+    await prisma.translation.create({
+      data: {
+        en,
+        ko: translatedText,
+        requestedFrom,
+      },
+    });
 
     return translatedText;
   }

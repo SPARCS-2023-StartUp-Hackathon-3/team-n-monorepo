@@ -189,7 +189,10 @@ export const questionRouter = createTRPCRouter({
       const translationService = new TranslationService();
       const createdOptions = await Promise.all(
         inferenceResult.result.map(async (r) => ({
-          text: await translationService.enToKr(r.result),
+          text: await translationService.enToKr(
+            r.result,
+            `postquestion ${url}`
+          ),
           textEn: r.result,
           sourceType: "model",
           sourceId: r.model,

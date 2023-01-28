@@ -46,7 +46,13 @@ export class InferenceService {
 
     const translationService = new TranslationService();
     const translatedResult = await Promise.all(
-      result.map(async (r) => await translationService.enToKr(r))
+      result.map(
+        async (r, i) =>
+          await translationService.enToKr(
+            r,
+            `inference ${uncachedUrls[i] || ""}`
+          )
+      )
     );
 
     await prisma.inference.createMany({

@@ -72,6 +72,14 @@ model User {
     submissions     Submission[]
 }
 
+model Translation {
+    id            Int      @id @default(autoincrement())
+    createdAt     DateTime @default(now())
+    en            String
+    ko            String
+    requestedFrom String
+}
+
 // Necessary for Next auth
 // model Account {
 //     id                String  @id @default(cuid())
