@@ -1,5 +1,6 @@
 import axios from "axios";
 import { z } from "zod";
+import { serverEnv } from "../../env/schema.mjs";
 import { prisma } from "../db";
 export class TranslationService {
   private instance = axios.create({
@@ -12,8 +13,8 @@ export class TranslationService {
       .post<unknown>("/v1/papago/n2mt", `source=en&target=ko&text=${en}`, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-          "X-Naver-Client-Id": "1HTYG_ypRx5SzoEt45Mm",
-          "X-Naver-Client-Secret": "UtJgCIdY6G",
+          "X-Naver-Client-Id": serverEnv.NAVER_CLIENT_ID,
+          "X-Naver-Client-Secret": serverEnv.NAVER_CLIENT_SECRET,
         },
       })
       .then((res) => res.data)

@@ -4,6 +4,7 @@ import axios from "axios";
 import { first, groupBy, orderBy } from "lodash";
 import { v4 } from "uuid";
 import { z } from "zod";
+import { serverEnv } from "../../../env/schema.mjs";
 import { InferenceRequestService } from "../../util/InferenceRequestService";
 import { TranslationService } from "../../util/TranslationService";
 import { createTRPCRouter, publicProcedure } from "../trpc";
@@ -142,34 +143,36 @@ export const questionRouter = createTRPCRouter({
     .input(z.object({ url: z.string().url() }))
     .mutation(async ({ ctx, input: { url } }) => {
       // // download url and save to s3
-      const s3 = new S3({
-        region: "ap-northeast-2",
-        credentials: {
-          accessKeyId: "AKIATVRAJUBDTJPNQJG4",
-          secretAccessKey: "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",
-        },
-      });
-
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const imageData = (await axios.get(url, { responseType: "arraybuffer" }))
-        .data;
-      const extension: string = url.split(".").pop() as string;
-      const key = `question/${v4()}.${extension}`;
-      await s3
-        .putObject({
-          Bucket: "sparcs-2023-startup-hackathon-n-1",
-          Key: key,
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          Body: imageData,
-        })
-        .catch((e) => {
-          console.log(e);
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: "Invalid url",
-            cause: e,
-          });
+      if (serverEnv.AWS_ACCESS_KEY_ID && serverEnv.AWS_SECRET_ACCESS_KEY) {
+        const s3 = new S3({
+          region: "ap-northeast-2",
+          credentials: {
+            accessKeyId: serverEnv.AWS_ACCESS_KEY_ID,
+            secretAccessKey: serverEnv.AWS_SECRET_ACCESS_KEY,
+          },
         });
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const imageData = (
+          await axios.get(url, { responseType: "arraybuffer" })
+        ).data;
+        const extension: string = url.split(".").pop() as string;
+        const key = `question/${v4()}.${extension}`;
+        await s3
+          .putObject({
+            Bucket: "sparcs-2023-startup-hackathon-n-1",
+            Key: key,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            Body: imageData,
+          })
+          .catch((e) => {
+            console.log(e);
+            throw new TRPCError({
+              code: "BAD_REQUEST",
+              message: "Invalid url",
+              cause: e,
+            });
+          });
+      }
 
       // 기존 질문을 삭제한다
       await ctx.prisma.question.deleteMany({
