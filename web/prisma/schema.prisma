@@ -43,6 +43,7 @@ model Option {
     sourceId    String
     questionId  Int
     disabled    Boolean      @default(false)
+    scoreOffset Int          @default(0)
     question    Question     @relation(fields: [questionId], references: [id])
     submissions Submission[]
 

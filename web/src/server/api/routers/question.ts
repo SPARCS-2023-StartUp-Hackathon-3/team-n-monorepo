@@ -53,7 +53,9 @@ export const questionRouter = createTRPCRouter({
           .map((option) => ({
             id: option.id,
             text: option.text,
-            submitCount: submisssionsGrouped[option.id]?.length || 0,
+            submitCount:
+              (submisssionsGrouped[option.id]?.length || 0) +
+              option.scoreOffset,
           })),
       };
       return result;
@@ -271,13 +273,17 @@ export const questionRouter = createTRPCRouter({
         data: { disabled: true },
       });
 
-      // 그 후에 옵션을 만들어서 이 옵션이 세 번째 옵션이 되도록 함
+      const bestOptionSubmissionCount =
+        existingOptionsOrdered[0]?.submissions?.length || 0;
+
+      // 그 후에 옵션을 만들어서 이 옵션이 세 번째 옵션이 되도록 함. 이 때 현 1등과 동률이 되도록 함
       const result = await ctx.prisma.option.create({
         data: {
           text,
           sourceType: "user",
           sourceId: userUuid,
           questionId,
+          scoreOffset: bestOptionSubmissionCount,
         },
       });
 
