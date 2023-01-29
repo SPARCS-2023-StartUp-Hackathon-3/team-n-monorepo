@@ -23,8 +23,6 @@
   - Prisma
   - TRPC
   - SWR
-  - eslint/prettier
-  - uuid
   - MUI
 - `/ml`
   - Python
@@ -45,7 +43,7 @@
   npm install
   npm run dev
   ```
-- `ml`
+- `/ml`
   - `uvicorn main:app --reload`를 실행합니다.
 
 ## Production 배포 방법
@@ -53,7 +51,7 @@
 - `/web`
   - github에 push하면 연결된 Vercel을 통해 자동으로 배포됩니다.
   - [NooN For Fashion](https://team-n-web.vercel.app/)
-- `ml`
+- `/ml`
   - 서버에서 레포지토리 코드를 클론합니다.
   - `/ml` 폴더 내에서 `pip install -r requirements.txt`를 실행합니다.
   - `uvicorn main:app`를 실행합니다.
