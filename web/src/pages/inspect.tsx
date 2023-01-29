@@ -219,7 +219,7 @@ const Inspect: NextPage = () => {
           resize: none;
         }
         .imgAlign {
-          margin-top: 16px;
+          margin-top: 4px;
           display: flex;
           justify-content: center;
           mix-blend-mode: difference;

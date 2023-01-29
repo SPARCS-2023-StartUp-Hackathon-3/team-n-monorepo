@@ -208,7 +208,7 @@ function Carousel({
           width: ${fullWidth}px;
           height: ${fullWidth}px;
           overflow-x: hidden;
-          margin: -160px 0 -200px;
+          margin: -140px 0 -200px;
         }
         .item {
           position: absolute;
