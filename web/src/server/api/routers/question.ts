@@ -26,6 +26,10 @@ export const questionRouter = createTRPCRouter({
       const allQuestions = await ctx.prisma.question.findMany({
         select: { id: true },
         where: { id: { notIn: userQuestionIds } },
+        orderBy: {
+          position: "desc",
+          id: "asc",
+        },
       });
 
       // 그 중에서 하나를 선택한다 (현재는 그냥 첫번째)

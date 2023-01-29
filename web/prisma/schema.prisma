@@ -30,6 +30,7 @@ model Question {
     createdAt   DateTime     @default(now())
     url         String
     s3Url       String?
+    position    Int          @default(0)
     submissions Submission[]
     options     Option[]
 }
