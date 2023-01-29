@@ -10,6 +10,7 @@ import { api } from "../utils/api";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { Snackbar, Alert } from "@mui/material";
+import Tooltip from '@mui/material/Tooltip';
 
 const Inspect: NextPage = () => {
   // toast
@@ -162,7 +163,14 @@ const Inspect: NextPage = () => {
                   옷장에 집어넣기
                 </button>
                 <div className="tooltipWrapper">
-                  <Tooltip title={<p style={{ fontSize: 15, padding: 15 }}><b>대체텍스트란?</b><br></br><br></br>눈으로 화면을 볼 수 없는 경우, 각 이미지의 대체 텍스트로 입력된 설명을 스크린리더를 통해 음성으로 듣게 됩니다.<br></br>대체 텍스트를 작성할 때는 간결하고 명확하게 이미지의 내용과 목적을 전달해야 합니다. 두 문장보다는 길어지지 않게 작성하는 것이 좋습니다.</p>}
+                  <Tooltip title={<div style={{ padding: 15 }}><p style={{ fontFamily: "SCoreDream", fontSize: 15}}><b>대체텍스트란?</b><br></br><br></br>눈으로 화면을 볼 수 없는 경우, 각 이미지의 대체 텍스트로 입력된 설명을 스크린리더를 통해 음성으로 듣게 됩니다.<br></br>대체 텍스트를 작성할 때는 간결하고 명확하게 이미지의 내용과 목적을 전달해야 합니다. 두 문장보다는 길어지지 않게 작성하는 것이 좋습니다.<br></br><br></br>예시)</p>
+                  <img src="/example.png" style={{
+                    display: "block",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    marginBottom: "auto"
+                    
+                  }}></img></div>}
                     arrow placement="top-start">
                     <p sx={
                       { bgcolor: 'text.disabled',
@@ -279,6 +287,10 @@ const Inspect: NextPage = () => {
         .tooltipWrapper {
             width: 35px;
             height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
             font-weight: 300;
             font-size: 20px;
             position: absolute;
@@ -288,7 +300,7 @@ const Inspect: NextPage = () => {
             border-radius: 18px;
             text-align: center;
             color: white;
-            vertical-align: 4px;
+
           }
       `}</style>
     </>
