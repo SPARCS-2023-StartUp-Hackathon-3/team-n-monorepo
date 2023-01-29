@@ -8,6 +8,7 @@ import { z } from "zod";
 export const serverSchema = z.object({
   DATABASE_URL: z.string().url(),
   NODE_ENV: z.enum(["development", "test", "production"]),
+  NEXTAUTH_SECRET: z.string().default("."),
   NEXTAUTH_URL: z.preprocess(
     // This makes Vercel deployments not fail if you don't set NEXTAUTH_URL
     // Since NextAuth.js automatically uses the VERCEL_URL if present.
@@ -38,6 +39,7 @@ export const serverEnv = {
   NAVER_CLIENT_ID: process.env.NAVER_CLIENT_ID,
   NAVER_CLIENT_SECRET: process.env.NAVER_CLIENT_SECRET,
   INFERENCE_SERVER_BASE_URL: process.env.INFERENCE_SERVER_BASE_URL,
+  NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
 };
 
 /**
