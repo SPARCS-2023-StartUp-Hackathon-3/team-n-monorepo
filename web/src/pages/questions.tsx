@@ -211,6 +211,7 @@ const Questions: NextPage = () => {
                     <span
                       className="percent"
                       style={{
+                        transition: answer ? "transform 1s" : "transform 100s",
                         transform: `scaleX(${
                           answer
                             ? (option.submitCount +
@@ -326,8 +327,6 @@ const Questions: NextPage = () => {
           width: 100%;
           height: 100%;
           border-radius: 10px;
-
-          transition: transform 1s;
           background-color: black;
           transform-origin: left;
         }
