@@ -143,12 +143,16 @@ export const questionRouter = createTRPCRouter({
     .input(z.object({ url: z.string().url() }))
     .mutation(async ({ ctx, input: { url } }) => {
       // // download url and save to s3
-      if (serverEnv.AWS_ACCESS_KEY_ID && serverEnv.AWS_SECRET_ACCESS_KEY) {
+      let s3Key: string | undefined;
+      if (
+        serverEnv.CUSTOM_AWS_ACCESS_KEY_ID &&
+        serverEnv.CUSTOM_AWS_SECRET_ACCESS_KEY
+      ) {
         const s3 = new S3({
           region: "ap-northeast-2",
           credentials: {
-            accessKeyId: serverEnv.AWS_ACCESS_KEY_ID,
-            secretAccessKey: serverEnv.AWS_SECRET_ACCESS_KEY,
+            accessKeyId: serverEnv.CUSTOM_AWS_ACCESS_KEY_ID,
+            secretAccessKey: serverEnv.CUSTOM_AWS_SECRET_ACCESS_KEY,
           },
         });
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -172,6 +176,7 @@ export const questionRouter = createTRPCRouter({
               cause: e,
             });
           });
+        s3Key = key;
       }
 
       // 기존 질문을 삭제한다
@@ -218,7 +223,9 @@ export const questionRouter = createTRPCRouter({
       await ctx.prisma.question.create({
         data: {
           url,
-          s3Url: `https://sparcs-2023-startup-hackathon-n-1.s3.ap-northeast-2.amazonaws.com/${key}`,
+          s3Url: s3Key
+            ? `https://sparcs-2023-startup-hackathon-n-1.s3.ap-northeast-2.amazonaws.com/${s3Key}`
+            : undefined,
           options: {
             create: createdOptions,
           },
