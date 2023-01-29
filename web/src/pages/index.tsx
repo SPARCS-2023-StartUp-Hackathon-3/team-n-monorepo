@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import useAuth from "../hooks/useAuth";
+import Tooltip from '@mui/material/Tooltip';
 
 const Home: NextPage = () => {
   const { data: ranking } = api.ranking.get.useQuery();
@@ -88,7 +89,7 @@ const Home: NextPage = () => {
 
           <div className="middle">
             <div className="ranking">
-              <ul style={{ minHeight: "144px" }}>
+              <ul style={{minHeight: "144px"}}>
                 {ranking?.slice(0, 4).map((user) => (
                   <li key={user.userUuid}>
                     <span style={{ display: "inline-block", minWidth: 32 }}>
@@ -146,13 +147,18 @@ const Home: NextPage = () => {
                 onChange={(e) => {
                   setNickname(e.target.value);
                 }}
-                maxLength={8}
               />
               <p className="p2">
                 더 많은 사람들이 선택한 대체텍스트를 찾아 보세요!
               </p>
               <button>시작하기</button>
             </form>
+          </div>
+          <div className="tooltipWrapper">
+            <Tooltip title="대체텍스트란? 눈으로 화면을 볼 수 없는 경우, 각 이미지의 대체 텍스트로 입력된 설명을 스크린리더를 통해 음성으로 듣게 됩니다. 대체 텍스트를 작성할 때는 간결하고 명확하게 이미지의 내용과 목적을 전달해야 합니다. 두 문장보다는 길어지지 않게 작성하는 것이 좋습니다."
+              arrow placement="top-start">
+              <box sx={{ bgcolor: 'text.disabled', color: 'background.paper' }}>?</box>
+            </Tooltip>
           </div>
         </div>
       </main>
@@ -241,6 +247,21 @@ const Home: NextPage = () => {
           input::placeholder {
             color: #ffffff;
             mix-blend-mode: difference;
+          }
+          .tooltipWrapper {
+            width: 35px;
+            height: 35px;
+            font-weight: 300;
+            font-size: 20px;
+            line-height: 24px;
+            position: relative;
+            left: 63%;
+            bottom: 35px;
+            background: black;
+            border-radius: 18px;
+            text-align: center;
+            color: white;
+            line-height: 35px;
           }
 
           /** background css */
