@@ -111,15 +111,19 @@ export const questionRouter = createTRPCRouter({
           },
         });
 
-        // 가장 많이 나타난 옵션을 찾고
+        // 가장 많이 나타난 옵션을 찾고 (scoreOffset 포함 )
         const submissionsByOption = await ctx.prisma.submission.findMany({
           where: { questionId },
           select: { optionId: true },
         });
-
         const mostOccuredOptionId = first(
-          Object.entries(groupBy(submissionsByOption, "optionId")).sort(
-            (a, b) => b[1].length - a[1].length
+          orderBy(
+            Object.entries(groupBy(submissionsByOption, "optionId")),
+            ([optionId, submissions]) =>
+              submissions.length +
+              (question.options.find((o) => o.id === Number(optionId))
+                ?.scoreOffset || 0),
+            "desc"
           )
         )?.[0];
         if (!mostOccuredOptionId) {
