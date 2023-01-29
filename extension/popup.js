@@ -6,7 +6,7 @@ fetch("https://team-n-web.vercel.app/api/noon/count", {
   },
 }).then((response) => {
   response.json().then((res) => {
-    document.getElementById("count").innerText = String(res.count);
+    document.getElementById("allCount").innerText = String(res.count);
   });
 });
 
@@ -22,7 +22,7 @@ window.addEventListener("load", () => {
         tabs[0].id,
         { from: "popup", subject: "DOMInfo" },
         (count) => {
-          document.getElementById("count2").innerText = String(count ?? 0);
+          document.getElementById("count").innerText = String(count ?? 0);
         }
       );
     }
