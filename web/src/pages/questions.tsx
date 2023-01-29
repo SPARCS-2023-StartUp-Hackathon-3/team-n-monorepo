@@ -194,6 +194,7 @@ const Questions: NextPage = () => {
                 {options.map((option, index) => (
                   <li
                     className="box"
+                    data-disabled={!!answer ? "true" : "false"}
                     key={option.id}
                     onClick={() => {
                       if (!answer) {
@@ -265,7 +266,7 @@ const Questions: NextPage = () => {
           border: 1px solid #000000;
           border-radius: 10px;
         }
-        .box:hover {
+        .box:hover:not(.box[data-disabled="true"]) {
           position: relative;
           width: 630px;
           min-height: 90px;
@@ -338,7 +339,7 @@ const Questions: NextPage = () => {
         .backgroundScore {
           z-index: -1;
           position: absolute;
-          right: 0px;
+          right: 0;
           top: 777.87px;
 
           font-weight: 300;
