@@ -15,7 +15,7 @@
 - `/extension`
   - Chrome Extension
   - HTML/CSS/JS
-  - `service-worker`, `content-script`, `content.js` 사이의 message 통신
+  - `service-worker`, `content-script`, `popup.js` 사이의 message 통신
   - fetch API
 - `/web`
   - T3 Stack
