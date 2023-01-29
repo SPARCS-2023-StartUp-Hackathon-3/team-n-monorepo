@@ -39,6 +39,7 @@ export const serverEnv = {
   NAVER_CLIENT_ID: process.env.NAVER_CLIENT_ID,
   NAVER_CLIENT_SECRET: process.env.NAVER_CLIENT_SECRET,
   INFERENCE_SERVER_BASE_URL: process.env.INFERENCE_SERVER_BASE_URL,
+  NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
 };
 
 /**
