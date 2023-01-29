@@ -157,9 +157,19 @@ const Inspect: NextPage = () => {
                   pointerEvents: inspected ? "none" : "auto",
                 }}
               />
-              <button onClick={submit} disabled={inspected}>
-                옷장에 집어넣기
-              </button>
+              <div style={{ position: 'relative' }}>
+                <button onClick={submit} disabled={inspected}>
+                  옷장에 집어넣기
+                </button>
+                <div className="tooltipWrapper">
+                  <Tooltip title={<p style={{ fontSize: 15, padding: 15 }}><b>대체텍스트란?</b><br></br><br></br>눈으로 화면을 볼 수 없는 경우, 각 이미지의 대체 텍스트로 입력된 설명을 스크린리더를 통해 음성으로 듣게 됩니다.<br></br>대체 텍스트를 작성할 때는 간결하고 명확하게 이미지의 내용과 목적을 전달해야 합니다. 두 문장보다는 길어지지 않게 작성하는 것이 좋습니다.</p>}
+                    arrow placement="top-start">
+                    <p sx={
+                      { bgcolor: 'text.disabled',
+                      color: 'background.paper' }}>?</p>
+                  </Tooltip>
+                </div>
+              </div>
             </div>
           </div>
           <div className="nextWrapper">
@@ -266,6 +276,20 @@ const Inspect: NextPage = () => {
           border-bottom: 2px solid;
           width: 7%;
         }
+        .tooltipWrapper {
+            width: 35px;
+            height: 35px;
+            font-weight: 300;
+            font-size: 20px;
+            position: absolute;
+            left: calc(50% + 220px);
+            bottom: 0px;
+            background: black;
+            border-radius: 18px;
+            text-align: center;
+            color: white;
+            vertical-align: 4px;
+          }
       `}</style>
     </>
   );
