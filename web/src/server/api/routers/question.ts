@@ -27,8 +27,7 @@ export const questionRouter = createTRPCRouter({
         select: { id: true },
         where: { id: { notIn: userQuestionIds } },
         orderBy: {
-          position: "desc",
-          id: "asc",
+          position: "asc",
         },
       });
 
