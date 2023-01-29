@@ -10,7 +10,7 @@ import { api } from "../utils/api";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { Snackbar, Alert } from "@mui/material";
-import Tooltip from '@mui/material/Tooltip';
+import Tooltip from "@mui/material/Tooltip";
 
 const Inspect: NextPage = () => {
   // toast
@@ -120,26 +120,28 @@ const Inspect: NextPage = () => {
                   triggerNext={message}
                   fullWidth={750}
                   fullHeight={400}
-                  items={new Array(9).fill(null).map((_, i) => {
-                    const question = questions[i % questions.length];
-                    return (
-                      <img
-                        className="image"
-                        src={question?.url || ""}
-                        alt={question?.correctAnswer || ""}
-                        width={500}
-                        height={500}
-                        key={i}
-                        style={{
-                          opacity: inspectedQuestions
-                            .map((q) => q.id)
-                            .includes(Number(question?.id))
-                            ? 0.5
-                            : 1,
-                        }}
-                      />
-                    );
-                  })}
+                  items={new Array(Math.max(questions.length, 9))
+                    .fill(null)
+                    .map((_, i) => {
+                      const question = questions[i % questions.length];
+                      return (
+                        <img
+                          className="image"
+                          src={question?.url || ""}
+                          alt={question?.correctAnswer || ""}
+                          width={500}
+                          height={500}
+                          key={i}
+                          style={{
+                            opacity: inspectedQuestions
+                              .map((q) => q.id)
+                              .includes(Number(question?.id))
+                              ? 0.5
+                              : 1,
+                          }}
+                        />
+                      );
+                    })}
                   emitCurrentIndex={(index) => {
                     setCurrentQuestion(questions[index % questions.length]!);
                   }}
@@ -158,20 +160,39 @@ const Inspect: NextPage = () => {
                   pointerEvents: inspected ? "none" : "auto",
                 }}
               />
-              <div style={{ position: 'relative' }}>
+              <div style={{ position: "relative" }}>
                 <button onClick={submit} disabled={inspected}>
                   옷장에 집어넣기
                 </button>
                 <div className="tooltipWrapper">
-                  <Tooltip title={<div style={{ padding: 15 }}><p style={{ fontFamily: "SCoreDream", fontSize: 15}}><b>대체텍스트란?</b><br></br><br></br>눈으로 화면을 볼 수 없는 경우, 각 이미지의 대체 텍스트로 입력된 설명을 스크린리더를 통해 음성으로 듣게 됩니다.<br></br>대체 텍스트를 작성할 때는 간결하고 명확하게 이미지의 내용과 목적을 전달해야 합니다. 두 문장보다는 길어지지 않게 작성하는 것이 좋습니다.<br></br><br></br>예시)</p>
-                  <img src="/example.png" style={{
-                    display: "block",
-                    marginLeft: "auto",
-                    marginRight: "auto",
-                    marginBottom: "auto"
-                    
-                  }}></img></div>}
-                    arrow placement="top-start">
+                  <Tooltip
+                    title={
+                      <div style={{ padding: 15 }}>
+                        <p style={{ fontFamily: "SCoreDream", fontSize: 15 }}>
+                          <b>대체텍스트란?</b>
+                          <br></br>
+                          <br></br>눈으로 화면을 볼 수 없는 경우, 각 이미지의
+                          대체 텍스트로 입력된 설명을 스크린리더를 통해 음성으로
+                          듣게 됩니다.<br></br>대체 텍스트를 작성할 때는
+                          간결하고 명확하게 이미지의 내용과 목적을 전달해야
+                          합니다. 두 문장보다는 길어지지 않게 작성하는 것이
+                          좋습니다.<br></br>
+                          <br></br>예시)
+                        </p>
+                        <img
+                          src="/example.png"
+                          style={{
+                            display: "block",
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                            marginBottom: "auto",
+                          }}
+                        ></img>
+                      </div>
+                    }
+                    arrow
+                    placement="top-start"
+                  >
                     <p>?</p>
                   </Tooltip>
                 </div>
@@ -283,23 +304,22 @@ const Inspect: NextPage = () => {
           width: 7%;
         }
         .tooltipWrapper {
-            width: 35px;
-            height: 35px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+          width: 35px;
+          height: 35px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
 
-            font-weight: 300;
-            font-size: 20px;
-            position: absolute;
-            left: calc(50% + 220px);
-            bottom: 0px;
-            background: black;
-            border-radius: 18px;
-            text-align: center;
-            color: white;
-
-          }
+          font-weight: 300;
+          font-size: 20px;
+          position: absolute;
+          left: calc(50% + 220px);
+          bottom: 0px;
+          background: black;
+          border-radius: 18px;
+          text-align: center;
+          color: white;
+        }
       `}</style>
     </>
   );
