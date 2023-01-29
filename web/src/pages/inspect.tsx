@@ -133,7 +133,7 @@ const Inspect: NextPage = () => {
                           opacity: inspectedQuestions
                             .map((q) => q.id)
                             .includes(Number(question?.id))
-                            ? 0.1
+                            ? 0.5
                             : 1,
                         }}
                       />

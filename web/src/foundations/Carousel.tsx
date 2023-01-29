@@ -219,7 +219,7 @@ function Carousel({
           align-items: center;
 
           border-radius: 10px;
-          background-color: white;
+          background-color: #1410c2;
           box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.16);
         }
       `}</style>

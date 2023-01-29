@@ -241,6 +241,10 @@ const Questions: NextPage = () => {
           text-align: center;
           color: #000000;
           font-size: 20px;
+          min-height: 100px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
         .question {
           margin-top: 32px;
