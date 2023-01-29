@@ -1,9 +1,10 @@
 import axios from "axios";
 import { z } from "zod";
+import { serverEnv } from "../../env/schema.mjs";
 
 export class InferenceRequestService {
   private instance = axios.create({
-    baseURL: "http://noon.hackathon.sparcs.org",
+    baseURL: serverEnv.INFERENCE_SERVER_BASE_URL,
   });
 
   async getMultiple(urls: string[]): Promise<
