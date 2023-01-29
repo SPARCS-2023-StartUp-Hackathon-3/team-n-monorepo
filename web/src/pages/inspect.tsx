@@ -172,9 +172,7 @@ const Inspect: NextPage = () => {
                     
                   }}></img></div>}
                     arrow placement="top-start">
-                    <p sx={
-                      { bgcolor: 'text.disabled',
-                      color: 'background.paper' }}>?</p>
+                    <p>?</p>
                   </Tooltip>
                 </div>
               </div>
