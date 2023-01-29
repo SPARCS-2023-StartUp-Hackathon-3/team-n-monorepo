@@ -6,7 +6,7 @@
 
 - `/extension`: 시각장애인에게 img alt text를 제공하는 Chrome Extension 관련 코드
 - `/web`: 비장애인이 게임을 통해 img alt text 고도화에 기여할 수 있는 웹서비스 관련 코드
-- `/ml`:
+- `/ml`: 비장애인이 보는 이미지에 대해 적절한 alt text를 생성하는 인공지능 모델의 서버 관련 코드
 
 ## 프로젝트에서 사용한 기술
 
@@ -20,6 +20,8 @@
 - `/web`
   - T3 Stack
   - Next.js
+  - Prisma
+  - TRPC
   - SWR
   - eslint/prettier
   - uuid
@@ -27,6 +29,7 @@
 - `/ml`
   - Python
   - Pytorch
+  - FastAPI
 
 ## Dev Server 실행 방법
 
@@ -43,12 +46,17 @@
   npm run dev
   ```
 - `ml`
+  - `uvicorn main:app --reload`를 실행합니다.
 
 ## Production 배포 방법
 
 - `/web`
   - github에 push하면 연결된 Vercel을 통해 자동으로 배포됩니다.
   - [NooN For Fashion](https://team-n-web.vercel.app/)
+- `ml`
+  - 서버에서 레포지토리 코드를 클론합니다.
+  - `/ml` 폴더 내에서 `pip install -r requirements.txt`를 실행합니다.
+  - `uvicorn main:app`를 실행합니다.
 
 ## 환경 변수 및 시크릿
 
@@ -62,4 +70,4 @@
 
 ## 기타
 
-... 기타 설명이 필요한 사항들 ...
+잘 부탁드립니다!
