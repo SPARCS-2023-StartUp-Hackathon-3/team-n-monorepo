@@ -6,14 +6,14 @@
 
 - `/extension`: 시각장애인에게 img alt text를 제공하는 Chrome Extension 관련 코드
 - `/web`: 비장애인이 게임을 통해 img alt text 고도화에 기여할 수 있는 웹서비스 관련 코드
-- `/ml`: 
+- `/ml`:
 
 ## 프로젝트에서 사용한 기술
 
 본 프로젝트에는 아래와 같은 기술들이 사용되었습니다.
 
 - `/extension`
-  - Chrome Extension 
+  - Chrome Extension
   - HTML/CSS/JS
   - `service-worker`, `content-script`, `content.js` 사이의 message 통신
   - fetch API
@@ -52,8 +52,13 @@
 
 ## 환경 변수 및 시크릿
 
-- `/web`
-  - `.env` 환경 변수 중 `DATABASE_URL` 값이 필요합니다.
+- `/web`의 Next.js 서버를 실행하기 위해서는, `/web/.env` 에 아래와 같은 값이 필요합니다.
+  - `DATABASE_URL`: 연결할 데이터베이스의 URL입니다.
+  - `CUSTOM_AWS_ACCESS_KEY_ID`: s3 bucket에 이미지를 업로드하기 위해 필요합니다.
+  - `CUSTOM_AWS_SECRET_ACCESS_KEY`: s3 bucket에 이미지를 업로드하기 위해 필요합니다.
+  - `NAVER_CLIENT_ID`: [Papago NMT API](https://developers.naver.com/docs/nmt/reference/)를 호출하기 위해 필요합니다.
+  - `NAVER_CLIENT_SECRET`: [Papago NMT API](https://developers.naver.com/docs/nmt/reference/)를 호출하기 위해 필요합니다.
+  - `INFERENCE_SERVER_BASE_URL`: `/ml` 디렉토리에서 제공하는 머신러닝 서버의 base url입니다.
 
 ## 기타
 
