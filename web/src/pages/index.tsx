@@ -1,11 +1,12 @@
+import { Box } from "@mui/material";
+import Tooltip from '@mui/material/Tooltip';
 import { type NextPage } from "next";
 import Head from "next/head";
-import { api } from "../utils/api";
 import Image from "next/image";
-import { useState } from "react";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import useAuth from "../hooks/useAuth";
-import Tooltip from '@mui/material/Tooltip';
+import { api } from "../utils/api";
 
 const Home: NextPage = () => {
   const { data: ranking } = api.ranking.get.useQuery();
@@ -157,7 +158,7 @@ const Home: NextPage = () => {
           <div className="tooltipWrapper">
             <Tooltip title="대체텍스트란? 눈으로 화면을 볼 수 없는 경우, 각 이미지의 대체 텍스트로 입력된 설명을 스크린리더를 통해 음성으로 듣게 됩니다. 대체 텍스트를 작성할 때는 간결하고 명확하게 이미지의 내용과 목적을 전달해야 합니다. 두 문장보다는 길어지지 않게 작성하는 것이 좋습니다."
               arrow placement="top-start">
-              <box sx={{ bgcolor: 'text.disabled', color: 'background.paper' }}>?</box>
+              <Box sx={{ bgcolor: 'text.disabled', color: 'background.paper' }}>?</Box>
             </Tooltip>
           </div>
         </div>
